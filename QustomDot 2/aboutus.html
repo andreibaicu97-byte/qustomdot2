@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QustomDot — Get to know the team</title>
+  <meta name="description" content="Meet the scientists and engineers behind QustomJet™ — Cd-free Quantum Dot inkjet inks." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="icon" href="assets/logo.png" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    .nav { left: var(--gutter); right: var(--gutter); transform: none; }
+    .nav .btn--red { background: rgba(225,29,23,0.88); }
+    .nav .btn--red:hover { background: rgba(205,23,15,0.92); }
+
+    /* ── HERO ── */
+    .ab-hero {
+      position: relative; overflow: hidden; background: #14100d;
+      margin: clamp(80px, 11vh, 104px) var(--gutter) var(--gutter);
+      border-radius: 26px;
+      height: calc(100vh - clamp(80px, 11vh, 104px) - var(--gutter));
+      min-height: 520px;
+      box-shadow: 0 34px 60px -40px rgba(170,60,24,.55);
+    }
+    .ab-hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .ab-hero__scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(20,16,12,.7), rgba(20,16,12,.1) 45%, rgba(20,16,12,.35)); }
+    .ab-hero__inner {
+      position: absolute; left: 0; right: 0; bottom: clamp(40px,8vh,90px);
+      padding: 0 var(--pad); color: #fff;
+    }
+    .ab-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.75); }
+    .ab-hero h1 { margin-top: 14px; font-weight: 900; font-size: clamp(36px,6vw,82px); line-height: 1.02; letter-spacing: -.5px; max-width: 16ch; }
+    .ab-hero__mute {
+      position: absolute; right: var(--pad); bottom: clamp(40px,8vh,90px);
+      width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; color: #fff;
+      background: rgba(20,16,12,.42); border: 1px solid rgba(255,255,255,.4);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: background .2s;
+    }
+    .ab-hero__mute:hover { background: rgba(20,16,12,.6); }
+    .ab-hero__mute svg { width: 22px; height: 22px; }
+
+    /* ── INTRO ── */
+    .ab-section { padding: clamp(64px,11vh,140px) var(--gutter); }
+    .ab-intro { display: grid; grid-template-columns: 2fr 1fr; gap: clamp(14px,2vw,28px); align-items: center; }
+    .ab-intro__lead { display: flex; flex-direction: column; gap: clamp(18px,3vh,32px); }
+    .ab-intro__media { border-radius: 22px; overflow: hidden; align-self: stretch; min-height: clamp(260px,42vh,440px); }
+    .ab-intro__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    @media (max-width: 760px) { .ab-intro { grid-template-columns: 1fr; } }
+    .ab-intro h2 { font-weight: 900; font-size: clamp(26px,3.4vw,46px); line-height: 1.08; letter-spacing: -.5px;
+      background: var(--heading-grad); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
+    .ab-intro__text p { font-size: var(--fs-body); line-height: 1.7; color: var(--ink-soft); }
+    .ab-intro__text p + p { margin-top: 1.1em; }
+
+    /* ── PICTURE ROW ── */
+    .ab-picture-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: clamp(14px,2vw,28px);
+      margin: 0 var(--gutter) var(--gutter);
+      align-items: stretch;
+    }
+    .ab-picture {
+      border-radius: 26px;
+      overflow: hidden;
+    }
+    .ab-picture img {
+      width: 100%; height: auto;
+      display: block;
+    }
+    .ab-picture-aside {
+      padding: clamp(4px,1vw,12px) clamp(8px,1.5vw,20px) clamp(4px,1.5vh,16px);
+      display: flex; flex-direction: column;
+    }
+    .ab-picture-aside__h {
+      font-weight: 900;
+      font-size: clamp(20px,2vw,32px);
+      line-height: 1.1; letter-spacing: -.4px;
+      margin-bottom: 18px;
+      background: var(--heading-grad);
+      -webkit-background-clip: text; background-clip: text;
+      color: transparent; -webkit-text-fill-color: transparent;
+    }
+    .ab-picture-aside__p {
+      font-size: clamp(13px,.95vw,15px);
+      line-height: 1.72; color: var(--ink-soft);
+    }
+    .ab-picture-aside__p + .ab-picture-aside__p { margin-top: 1em; }
+    .ab-aside-icons {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      place-items: center;
+      gap: clamp(16px,3vh,28px);
+      margin-top: clamp(28px,5vh,60px);
+    }
+    .ab-aside-icon {
+      width: clamp(42px,4.8vw,64px); height: clamp(42px,4.8vw,64px);
+      display: grid; place-items: center;
+    }
+    .ab-aside-icon svg { width: 100%; height: 100%; }
+    @media (max-width: 720px) {
+      .ab-picture-row { grid-template-columns: 1fr; }
+    }
+
+    /* ── FOUNDERS ── */
+    .ab-founders-lead {
+      padding: clamp(56px,9vh,110px) var(--pad) clamp(6px,1vh,14px);
+      text-align: center;
+    }
+    .ab-founders-heading {
+      font-weight: 900;
+      font-size: clamp(26px,3.4vw,46px);
+      line-height: 1.08; letter-spacing: -.5px;
+      margin-bottom: 0;
+      background: var(--heading-grad);
+      -webkit-background-clip: text; background-clip: text;
+      color: transparent; -webkit-text-fill-color: transparent;
+    }
+    /* ── pinned colour-orb founders showcase ── */
+    .ab-orbstage { position: relative; height: 380vh; }
+    .ab-orbstage__pin {
+      position: sticky; top: 0;
+      height: 100vh; overflow: hidden;
+    }
+
+    /* colour orb — scoped copy of the homepage wheel, dead-centre */
+    .ab-orb {
+      position: absolute; left: 50%; top: 50%;
+      transform: translate(-50%,-50%);
+      width: clamp(360px, 50vw, 680px); aspect-ratio: 1;
+      z-index: 1; pointer-events: none;
+    }
+    .ab-orb__grad {
+      position: absolute; inset: 0;
+      background: var(--wheel-grad);
+      filter: blur(7px) saturate(1.05);
+      -webkit-mask-image: radial-gradient(circle closest-side at 50% 50%,
+          transparent 0 52%, rgba(0,0,0,.05) 58%, rgba(0,0,0,.85) 70%, #000 75%,
+          rgba(0,0,0,.55) 84%, rgba(0,0,0,.22) 91%, transparent 98%);
+              mask-image: radial-gradient(circle closest-side at 50% 50%,
+          transparent 0 52%, rgba(0,0,0,.05) 58%, rgba(0,0,0,.85) 70%, #000 75%,
+          rgba(0,0,0,.55) 84%, rgba(0,0,0,.22) 91%, transparent 98%);
+      animation: ab-orb-spin 26s linear infinite;
+      will-change: transform;
+    }
+    @keyframes ab-orb-spin { to { transform: rotate(360deg); } }
+
+    /* three swipe zones: photo (left) · name+role (orb centre) · description (right).
+       The photo CARD sweeps across the screen on index change (not clipped); the
+       name + description crossfade with a soft rise. */
+    .ab-swipe { position: absolute; pointer-events: none; }
+
+    /* photo — left of the orb; whole card sweeps in from the side + fades */
+    .ab-photos {
+      left: clamp(40px, 19vw, 320px); top: 50%;
+      width: clamp(240px, 24vw, 340px); aspect-ratio: 3/4;
+      transform: translate(-50%,-50%); z-index: 2;
+    }
+    .ab-photo {
+      position: absolute; inset: 0; margin: 0;
+      border-radius: 22px; overflow: hidden;
+      box-shadow: 0 45px 80px -34px rgba(120,45,15,.55);
+      opacity: 0; transform: translateX(60vw);
+      transition: transform .85s cubic-bezier(.5,0,.2,1), opacity .7s ease;
+      will-change: transform, opacity;
+    }
+    .ab-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .ab-photo figcaption { display: none; }
+
+    /* name + position — in the orb hollow; crossfade */
+    .ab-names {
+      left: 50%; top: 50%;
+      width: min(26vw, 280px); height: clamp(120px, 17vh, 168px);
+      transform: translate(-50%,-50%); z-index: 6;
+    }
+    .ab-name {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+      opacity: 0; transform: translateY(16px);
+      transition: opacity .6s ease, transform .6s ease;
+      will-change: opacity, transform;
+    }
+    .ab-name__n {
+      margin: 0; font-weight: 900;
+      font-size: clamp(26px,2.8vw,44px); line-height: 1.04; letter-spacing: -.5px;
+      background: var(--heading-grad); -webkit-background-clip: text; background-clip: text;
+      color: transparent; -webkit-text-fill-color: transparent;
+    }
+    .ab-name__r {
+      margin: 12px 0 0; font-size: clamp(11px,.85vw,13px);
+      font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--card-orange);
+    }
+
+    /* description — right of the orb */
+    .ab-descs {
+      right: clamp(24px, 5vw, 90px); top: 50%;
+      width: min(28vw, 340px); height: clamp(150px, 24vh, 230px);
+      transform: translateY(-50%); z-index: 2;
+    }
+    .ab-desc {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: center;
+      opacity: 0; transform: translateY(16px);
+      transition: opacity .6s ease, transform .6s ease;
+      will-change: opacity, transform;
+    }
+    .ab-desc__t { margin: 0; font-size: var(--fs-body); line-height: 1.7; color: var(--ink-soft); }
+
+    /* progress dots */
+    .ab-orbdots {
+      position: absolute; left: 50%; bottom: clamp(24px,5vh,52px);
+      transform: translateX(-50%); display: flex; gap: 10px; z-index: 4;
+    }
+    .ab-orbdots span {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(31,29,27,.2); transition: background .35s ease, transform .35s ease;
+    }
+    .ab-orbdots span.is-active { background: var(--card-orange); transform: scale(1.35); }
+
+    /* static fallback — small screens & reduced motion */
+    .ab-orbstage.is-static,
+    .ab-orbstage.is-static .ab-orbstage__pin { position: static; height: auto; overflow: visible; }
+    .ab-orbstage.is-static .ab-orbstage__pin { padding: 0 var(--pad) clamp(40px,8vh,80px); }
+    .ab-orbstage.is-static .ab-orb,
+    .ab-orbstage.is-static .ab-names,
+    .ab-orbstage.is-static .ab-descs,
+    .ab-orbstage.is-static .ab-orbdots { display: none; }
+    .ab-orbstage.is-static .ab-photos {
+      position: static; inset: auto; overflow: visible;
+      width: auto; aspect-ratio: auto; transform: none;
+      border-radius: 0; box-shadow: none;
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(16px,3vw,28px);
+    }
+    .ab-orbstage.is-static .ab-photo {
+      position: relative; inset: auto; width: 100%; aspect-ratio: 3/4;
+      border-radius: 22px; overflow: hidden;
+      transform: none !important; opacity: 1 !important;
+    }
+    .ab-orbstage.is-static .ab-photo figcaption {
+      display: block; position: absolute; left: 0; right: 0; bottom: 0;
+      padding: 60px 20px 20px; color: #fff;
+      background: linear-gradient(to top, rgba(20,16,12,.92) 46%, rgba(20,16,12,.45) 74%, transparent);
+    }
+    .ab-orbstage.is-static .ab-photo figcaption .n { display: block; font-weight: 900; font-size: 19px; }
+    .ab-orbstage.is-static .ab-photo figcaption .r { display: block; margin-top: 4px; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(240,155,90,.95); }
+    .ab-orbstage.is-static .ab-photo figcaption .b { display: block; margin-top: 9px; font-size: 12.5px; line-height: 1.55; color: rgba(255,255,255,.82); }
+    @media (max-width: 560px) { .ab-orbstage.is-static .ab-photos { grid-template-columns: 1fr; } }
+
+    /* ── CTA ── */
+    .ab-cta { margin: 0 var(--gutter) var(--gutter); border-radius: 24px; background: var(--card-orange); color: #fff;
+      padding: clamp(40px,7vh,88px) var(--pad); text-align: center; box-shadow: 0 34px 60px -40px rgba(170,60,24,.55); }
+    .ab-cta h2 { font-weight: 900; font-size: clamp(26px,3.6vw,52px); line-height: 1.06; letter-spacing: -.5px; max-width: 22ch; margin: 0 auto; }
+    .ab-cta p { margin: 16px auto 28px; max-width: 52ch; color: rgba(255,255,255,.92); font-size: var(--fs-body); line-height: 1.6; }
+    .ab-cta .btn { background: var(--cream-soft); color: var(--ink); }
+    .ab-cta .btn:hover { background: #fff; }
+
+    @media (max-width: 880px) {
+      .ab-intro { grid-template-columns: 1fr; }
+    }
+    /* Entry transition — set by <head> script before first paint */
+    html.expand-entry { background: #14100d; }
+    html.expand-entry body { opacity: 0; }
+    html.expand-entry.fade-in body { opacity: 1; transition: opacity .65s ease; }
+  </style>
+  <!-- Runs during HTML parse, before <body> is rendered — sets class before first paint -->
+  <script>if(sessionStorage.getItem('fromVideoExpand'))document.documentElement.classList.add('expand-entry');</script>
+</head>
+<body>
+
+  <script>
+    (function () {
+      if (!document.documentElement.classList.contains('expand-entry')) return;
+      sessionStorage.removeItem('fromVideoExpand');
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          document.documentElement.classList.add('fade-in');
+          setTimeout(function () {
+            document.documentElement.classList.remove('expand-entry', 'fade-in');
+          }, 800);
+        });
+      });
+    })();
+  </script>
+
+  <header class="nav">
+    <a class="brand" href="test5.html"><img src="assets/logo.png" alt="QustomDot" /></a>
+    <nav class="nav__links">
+      <a href="test5.html#products">Products</a>
+      <a href="test5.html#top">Home</a>
+      <a class="btn btn--red" href="test5.html#contact">Request a sample</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="ab-hero">
+      <video id="abVideo" src="assets/showcase.mp4" autoplay muted loop playsinline poster="assets/showcase-poster.jpg"></video>
+      <div class="ab-hero__scrim"></div>
+      <button class="ab-hero__mute" id="abMute" aria-label="Toggle sound"></button>
+    </section>
+
+    <section class="ab-section">
+      <div class="ab-intro">
+        <div class="ab-intro__lead">
+          <h2>Who is QustomDot?</h2>
+          <div class="ab-intro__text">
+            <p>QustomDot is a deep-tech company specializing in quantum dot materials for next-generation displays. Founded as a spin-off from Ghent University, our technology is the result of over two decades of research in quantum dot synthesis and surface engineering.</p>
+            <p>Our mission is to bring quantum dot color to every screen — sustainably, without toxic materials, and without complexity. We develop cadmium-free quantum dot inkjet inks that can be applied directly on-chip — removing the barriers that have kept quantum dots out of microLED and other advanced display applications.</p>
+          </div>
+        </div>
+        <div class="ab-intro__media">
+          <img src="assets/DSC_3594.jpg" alt="QustomJet™ quantum dot ink in the lab" />
+        </div>
+      </div>
+    </section>
+
+    <div class="ab-picture-row">
+      <div class="ab-picture">
+        <img src="assets/DSC_2747.jpg" alt="QustomDot team" />
+      </div>
+      <div class="ab-picture-aside">
+        <div class="ab-aside-icons">
+          <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+            <linearGradient id="abIconGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#e8190b"/>
+              <stop offset="0.35" stop-color="#ef5524"/>
+              <stop offset="0.7" stop-color="#f4894f"/>
+              <stop offset="1" stop-color="#f6c79c"/>
+            </linearGradient>
+          </defs></svg>
+          <div class="ab-aside-icon" title="Cadmium-free">
+            <svg viewBox="0 0 24 24" fill="none" stroke="url(#abIconGrad)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 13c0-3 2-5 5-9 3 4 5 6 5 9a5 5 0 0 1-10 0Z"/><path d="M4 4l16 16"/></svg>
+          </div>
+          <div class="ab-aside-icon" title="On-chip integration">
+            <svg viewBox="0 0 24 24" fill="none" stroke="url(#abIconGrad)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M10 2v3M14 2v3M10 19v3M14 19v3M2 10h3M2 14h3M19 10h3M19 14h3"/></svg>
+          </div>
+          <div class="ab-aside-icon" title="Production-ready">
+            <svg viewBox="0 0 24 24" fill="none" stroke="url(#abIconGrad)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V9l6 3V9l6 3V8l6 3v10Z"/></svg>
+          </div>
+          <div class="ab-aside-icon" title="Patent-protected">
+            <svg viewBox="0 0 24 24" fill="none" stroke="url(#abIconGrad)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6Z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="ab-founders-lead">
+      <h2 class="ab-founders-heading">Meet our management</h2>
+    </section>
+
+    <section class="ab-orbstage" id="orbStage">
+      <div class="ab-orbstage__pin">
+        <div class="ab-orb"><div class="ab-orb__grad"></div></div>
+
+        <!-- photo (left) -->
+        <div class="ab-photos ab-swipe">
+          <figure class="ab-photo">
+            <img src="assets/kim.jpg" alt="Kim" />
+            <figcaption><span class="n">Kim</span><span class="r">COO &amp; Co-Founder</span><span class="b">Oversees process engineering and manufacturing integration, ensuring QustomJet™ performs reliably at scale.</span></figcaption>
+          </figure>
+          <figure class="ab-photo">
+            <img src="assets/bart.jpg" alt="Bart" />
+            <figcaption><span class="n">Bart</span><span class="r">CTO &amp; Co-Founder</span><span class="b">The scientific architect of QustomJet™, whose research forms the foundation of our Cd-free chemistry platform.</span></figcaption>
+          </figure>
+          <figure class="ab-photo">
+            <img src="assets/imane.jpg" alt="Imane" />
+            <figcaption><span class="n">Imane</span><span class="r">Head of Formulation &amp; Co-Founder</span><span class="b">Translates lab-scale QD chemistry into production-ready inkjet inks across UV-curable systems and rheology.</span></figcaption>
+          </figure>
+          <figure class="ab-photo">
+            <img src="assets/arne.jpg" alt="Arne" />
+            <figcaption><span class="n">Arne</span><span class="r">CEO &amp; Co-Founder</span><span class="b">Leads QustomDot's commercial and strategic direction, bridging deep science and production-scale deployment.</span></figcaption>
+          </figure>
+        </div>
+
+        <!-- name + position (orb centre) -->
+        <div class="ab-names ab-swipe">
+          <div class="ab-name"><h3 class="ab-name__n">Kim</h3><p class="ab-name__r">COO &amp; Co-Founder</p></div>
+          <div class="ab-name"><h3 class="ab-name__n">Bart</h3><p class="ab-name__r">CTO &amp; Co-Founder</p></div>
+          <div class="ab-name"><h3 class="ab-name__n">Imane</h3><p class="ab-name__r">Head of Formulation</p></div>
+          <div class="ab-name"><h3 class="ab-name__n">Arne</h3><p class="ab-name__r">CEO &amp; Co-Founder</p></div>
+        </div>
+
+        <!-- description (right) -->
+        <div class="ab-descs ab-swipe">
+          <div class="ab-desc"><p class="ab-desc__t">Kim oversees process engineering and manufacturing integration, ensuring QustomJet™ performs reliably at scale. She bridges materials science and the realities of the production floor.</p></div>
+          <div class="ab-desc"><p class="ab-desc__t">Bart is the scientific architect of QustomJet™. His research in quantum dot synthesis and surface engineering forms the foundation of QustomDot's cadmium-free chemistry platform.</p></div>
+          <div class="ab-desc"><p class="ab-desc__t">Imane translates lab-scale quantum dot chemistry into production-ready inkjet inks. Her expertise spans UV-curable systems, rheology, and compatibility with industrial inkjet heads.</p></div>
+          <div class="ab-desc"><p class="ab-desc__t">Arne leads QustomDot's commercial and strategic direction. With a background in technology commercialization and display industry partnerships, he bridges deep science and production-scale deployment.</p></div>
+        </div>
+
+        <div class="ab-orbdots">
+          <span class="is-active"></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="ab-cta">
+      <h2>Ready to build the next generation of displays?</h2>
+      <p>Get in touch to learn how QustomJet™ inks can power your wide-gamut, energy-efficient displays.</p>
+      <a class="btn" href="test5.html#contact">Request a sample</a>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const vid = document.getElementById('abVideo');
+      const mute = document.getElementById('abMute');
+      const ON  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+      const OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>';
+      const set = () => { mute.innerHTML = vid.muted ? OFF : ON; };
+      mute.addEventListener('click', () => { vid.muted = !vid.muted; if(!vid.muted) vid.play(); set(); });
+      set();
+    })();
+  </script>
+
+  <!-- founders: pinned colour-orb — one scroll snaps a smooth swipe to the next person -->
+  <script>
+    (() => {
+      const reduce  = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const mqSmall = matchMedia('(max-width: 880px)');
+      const stage = document.getElementById('orbStage');
+      if (!stage) return;
+      const photos = [...stage.querySelectorAll('.ab-photo')];
+      const names  = [...stage.querySelectorAll('.ab-name')];
+      const descs  = [...stage.querySelectorAll('.ab-desc')];
+      const dots   = [...stage.querySelectorAll('.ab-orbdots span')];
+      const zones  = [photos, names, descs];
+      const N = photos.length;
+      const clamp = (v,a,b) => Math.min(b, Math.max(a, v));
+      let cur = -1;
+
+      function apply(idx){
+        if (idx === cur) return;
+        cur = idx;
+        // photo card sweeps across the screen; neighbours park off-screen + fade
+        const sweep = innerWidth * 0.7;
+        photos.forEach((el,i) => {
+          el.style.transform = `translateX(${((i-idx)*sweep).toFixed(0)}px)`;
+          el.style.opacity = i === idx ? '1' : '0';
+        });
+        // name + description crossfade with a soft rise
+        [names, descs].forEach(z => z.forEach((el,i) => {
+          el.style.opacity = i === idx ? '1' : '0';
+          el.style.transform = i === idx ? 'translateY(0)' : 'translateY(16px)';
+        }));
+        dots.forEach((d,i) => d.classList.toggle('is-active', i === idx));
+      }
+
+      function render(){
+        if (stage.classList.contains('is-static')) return;
+        const total    = stage.offsetHeight - innerHeight;
+        const scrolled = clamp(-stage.getBoundingClientRect().top, 0, total);
+        const progress = total > 0 ? scrolled / total : 0;
+        // quantise: the person stays fixed, then one step snaps to the next
+        apply(clamp(Math.round(progress * (N - 1)), 0, N - 1));
+      }
+
+      function applyMode(){
+        const stat = reduce || mqSmall.matches;
+        stage.classList.toggle('is-static', stat);
+        if (stat){
+          zones.forEach(z => z.forEach(el => { el.style.transform = ''; el.style.opacity = ''; }));
+        } else {
+          cur = -1; apply(0); render();
+        }
+      }
+
+      addEventListener('scroll', render, { passive: true });
+      addEventListener('resize', applyMode);
+      mqSmall.addEventListener('change', applyMode);
+      applyMode();
+    })();
+  </script>
+</body>
+</html>

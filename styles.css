@@ -1,0 +1,407 @@
+/* ===========================================================
+   QustomDot — Quantum Dot Inkjet Inks
+   =========================================================== */
+:root {
+  --cream:        #fbead6;   /* page background (beige) */
+  --cream-soft:   #fdf1e4;   /* header / lighter beige   */
+  --ink:          #1f1d1b;   /* primary dark text        */
+  --ink-soft:     #3a3733;
+  --card-orange:  #ec5e34;   /* "At the forefront" box   */
+  --grid-orange:  #f4791f;   /* ROHS grid box            */
+  --red:          #e11d17;   /* "Get started" button     */
+
+  /* translucent box fills — let the orb glow through (glass) */
+  --card-glass:   rgba(236, 94, 52, 0.86);
+  --grid-glass:   rgba(244, 121, 31, 0.86);
+
+  /* heading gradient — doubled so background-position shift looks seamless */
+  --heading-grad: linear-gradient(90deg,
+      #e8190b 0%, #ef5524 30%, #f4894f 60%, #f6c79c 100%);
+
+  /* the colour-wheel gradient, sampled from Color Wheel.svg */
+  --wheel-grad: linear-gradient(135deg,
+      #ff0500 0%, #ff1916 12%, #ff5a2e 30%,
+      #ff8a45 48%, #ffbb76 66%, #ffd8a8 82%, #f6eaff 100%);
+
+  --pad: clamp(20px, 4.5vw, 64px);
+  --gutter: clamp(14px, 2.4vw, 40px);   /* boxes sit NEAR the edge, not on it */
+  --box-h: clamp(372px, 46vh, 500px);   /* every colour box is this tall      */
+  --fs-body: clamp(16px, 1.15vw, 18px); /* one size for all running body copy  */
+  --ease: cubic-bezier(.22,.61,.36,1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: "Roboto", system-ui, -apple-system, Segoe UI, sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+
+/* ===========================================================
+   Colour wheel — fixed, slowly drifting glowing ring.
+   Single layer: linear gradient (rotates) + a radial RING mask
+   sized to the CLOSEST side, so the ring always sits inside the
+   box and never gets cropped on the edges.
+   =========================================================== */
+.wheel {
+  position: fixed;
+  top: 0; left: 0;
+  width: clamp(340px, 46vw, 660px);
+  aspect-ratio: 1;
+  z-index: -1;                 /* behind content, above page bg */
+  pointer-events: none;
+  will-change: transform;      /* JS translates this each frame */
+}
+.wheel__grad {
+  position: absolute;
+  inset: 0;
+  background: var(--wheel-grad);
+  filter: blur(7px) saturate(1.05);
+  transform-origin: 50% 50%;
+  will-change: transform;
+  /* ring profile (matches the SVG mask): hollow centre,
+     hot band ~74%, soft falloff, fully transparent before the edge */
+  -webkit-mask-image: radial-gradient(circle closest-side at 50% 50%,
+      transparent 0 52%, rgba(0,0,0,.05) 58%,
+      rgba(0,0,0,.85) 70%, #000 75%,
+      rgba(0,0,0,.55) 84%, rgba(0,0,0,.22) 91%, transparent 98%);
+          mask-image: radial-gradient(circle closest-side at 50% 50%,
+      transparent 0 52%, rgba(0,0,0,.05) 58%,
+      rgba(0,0,0,.85) 70%, #000 75%,
+      rgba(0,0,0,.55) 84%, rgba(0,0,0,.22) 91%, transparent 98%);
+}
+@keyframes wheel-spin { to { transform: rotate(360deg); } }
+
+/* ===========================================================
+   Header
+   =========================================================== */
+.nav {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 10px 18px 10px 14px;
+  white-space: nowrap;
+
+  /* glass pill */
+  background: rgba(253, 241, 228, 0.55);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: none;
+}
+.brand img { height: 30px; width: auto; }
+.nav__links { display: flex; align-items: center; gap: 38px; }
+.nav__links a { font-weight: 500; font-size: 15px; transition: color .2s var(--ease); }
+.nav__links a:hover { color: var(--card-orange); }
+
+/* ===========================================================
+   Buttons
+   =========================================================== */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 15px;
+  padding: 13px 26px; border-radius: 10px;
+  cursor: pointer; border: 0;
+  transition: transform .2s var(--ease), background-color .2s var(--ease);
+}
+.btn--red   { background: var(--red); color: #fff; box-shadow: none; border-radius: 9999px; }
+.btn--red:hover   { background: #c8170f; }
+.btn--light { background: var(--cream-soft); color: var(--ink); }
+.btn--light:hover { background: #fff; }
+.btn:hover { transform: translateY(-1px); }
+
+/* ===========================================================
+   Panel = one screen: beige head (heading + orb) on top,
+   a FULL-WIDTH colour box on the bottom (~half / half).
+   =========================================================== */
+.panel {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.panel__head {
+  flex: 1 1 auto;                       /* head fills the top, heading sits high */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: clamp(92px, 12vh, 140px) var(--pad) clamp(18px, 3vh, 34px);
+}
+.panel__box {
+  flex: 0 0 auto;
+  display: block;                            /* box keeps its definite --box-h */
+  padding: 0 var(--gutter) var(--gutter);   /* small gutter from screen edges */
+}
+
+.gradient-text {
+  /* JS computes and sets backgroundImage each frame to match orb inverse.
+     This fallback shows on load before the first rAF tick. */
+  background: linear-gradient(to right, #f6c79c, #e8190b);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent;
+}
+
+/* near-full-width, rounded, frosted colour boxes (orb shows through) */
+.box {
+  width: 100%;
+  height: var(--box-h);                 /* uniform height across panels */
+  color: #fff;
+  border-radius: 26px;
+  overflow: hidden;
+  backdrop-filter: blur(7px) saturate(1.05);
+  -webkit-backdrop-filter: blur(7px) saturate(1.05);
+  box-shadow: 0 34px 60px -40px rgba(170,60,24,.55);
+}
+.box--card { background: var(--card-glass); }
+.box--grid { background: var(--grid-glass); }
+
+/* ===========================================================
+   HERO  — head: title; box: "At the forefront" (pinned, the
+   three images woosh past one another).
+   =========================================================== */
+.hero { height: 100vh; }                  /* no longer needs scroll runway */
+.hero__sticky {
+  position: sticky; top: 0;
+  height: 100vh;
+  display: flex; flex-direction: column;
+}
+.hero__head { text-align: center; justify-content: center; padding-top: 16vh; }
+.hero__head h1 {
+  font-weight: 900;
+  font-size: clamp(34px, 5.6vw, 72px);
+  letter-spacing: -.5px; line-height: 1.02;
+}
+.hero__head p {
+  margin-top: 14px;
+  font-size: var(--fs-body);
+  color: var(--ink-soft); font-weight: 500;
+}
+
+.forefront {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: stretch;
+  gap: clamp(20px, 2.4vw, 40px);
+  padding: clamp(22px, 3vh, 34px) clamp(24px, 3vw, 44px);  /* inset => images have a slight margin */
+}
+.forefront__text {
+  display: flex; flex-direction: column; justify-content: center;
+  grid-column: 1;
+  min-width: 0;   /* allow flex child to shrink into its grid cell */
+  width: 100%;
+}
+.forefront .slider {
+  grid-column: 3;
+}
+.forefront__text h2 {
+  font-weight: 900;
+  font-size: clamp(30px, 3.6vw, 54px);
+  line-height: 1.03; letter-spacing: -.5px;
+  width: 100%;
+}
+.forefront__text p {
+  margin: 20px 0 28px;
+  font-size: var(--fs-body);
+  line-height: 1.6; color: rgba(255,255,255,.94);
+}
+.forefront__text .btn { align-self: flex-start; }
+
+/* the stacked-woosh slider — rounded, with a slight margin from the box */
+.slider { position: relative; overflow: hidden; border-radius: 14px; min-height: 220px; }
+.slide  { position: absolute; inset: 0; will-change: transform; isolation: isolate; }
+.slide img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+/* frosted glass argument card over each image */
+.slide__caption {
+  position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 2;
+  padding: 15px 18px;
+  border-radius: 13px;
+  color: #fff;
+  background: rgba(255,255,255,.08);
+  backdrop-filter: blur(18px) saturate(1.6) brightness(1.08);
+  -webkit-backdrop-filter: blur(18px) saturate(1.6) brightness(1.08);
+  border: 1.5px solid rgba(255,255,255,.45);
+  box-shadow: 0 4px 20px -8px rgba(0,0,0,.12);
+}
+.slide__caption h3 {
+  font-size: clamp(13px, 1.05vw, 16px);
+  font-weight: 900; letter-spacing: .5px; text-transform: uppercase;
+  margin-bottom: 7px;
+  text-shadow: 0 1px 6px rgba(0,0,0,.55);
+}
+.slide__caption p {
+  font-size: clamp(11px, .82vw, 13px); line-height: 1.45;
+  color: rgba(255,255,255,.95);
+  text-shadow: 0 1px 5px rgba(0,0,0,.5);
+}
+
+.slider__dots {
+  position: absolute; right: 16px; top: 14px; z-index: 6;
+  display: flex; justify-content: flex-end; gap: 8px;
+}
+.slider__dots span {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(255,255,255,.55); box-shadow: 0 1px 3px rgba(0,0,0,.4);
+  transition: width .25s var(--ease), background-color .25s var(--ease);
+}
+.slider__dots span.is-active { width: 22px; border-radius: 4px; background: #fff; }
+.slider__progress {
+  position: absolute; left: 0; top: 0; height: 3px; width: 0%;
+  background: rgba(255,255,255,.9); z-index: 6;
+}
+
+/* ===========================================================
+   Headings inside beige heads
+   =========================================================== */
+.head--lead h2, .head--right h2 {
+  font-weight: 900;
+  font-size: clamp(38px, 6.4vw, 84px);
+  line-height: 1; letter-spacing: -1px;
+}
+.head--lead p, .head--right p {
+  margin-top: 24px;
+  font-size: var(--fs-body);
+  line-height: 1.6; color: var(--ink-soft);
+}
+.head--lead p { max-width: 90ch; }
+.head--lead p strong, .head--right p strong { color: var(--card-orange); }
+
+/* "Across all types of displays" — heading + paragraph share one
+   right-aligned column so their left edges line up. */
+.head--right { align-items: flex-end; text-align: left; }
+.head--right .head__inner { width: min(680px, 100%); }
+
+/* ===========================================================
+   ROHS grid box — full width, image hugging the box edges
+   =========================================================== */
+.grid {
+  display: grid;
+  grid-template-columns: 1.04fr .5fr 1.36fr .5fr 1.04fr;
+  grid-template-rows: 1fr 1fr;
+  align-items: center;
+  column-gap: clamp(14px, 1.8vw, 32px);
+  row-gap: clamp(14px, 2vw, 28px);
+  padding: clamp(20px, 2.6vh, 34px) clamp(22px, 2.8vw, 44px);
+}
+/* Feature text — plain, no box */
+.feat-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  color: #fff;
+}
+.feat-text h3 {
+  font-weight: 900;
+  font-size: clamp(12px, 1.1vw, 16px);
+  letter-spacing: .4px;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+.feat-text p {
+  font-size: clamp(10px, .85vw, 13px);
+  line-height: 1.5;
+  color: rgba(255,255,255,.88);
+}
+
+/* Icon decos — fill cell, icon centred */
+.deco {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.deco svg {
+  width: clamp(40px, 4.4vw, 72px);
+  height: auto;
+}
+
+.grid__media {
+  grid-column: 3; grid-row: 1 / span 2;
+  align-self: stretch;                     /* slight margin comes from the box padding */
+  border-radius: 12px; overflow: hidden; background: #e9edf0;
+  min-height: 240px;
+}
+.grid__media img { width: 100%; height: 100%; object-fit: cover; }
+
+
+.g-tl { grid-column: 1; grid-row: 1; }
+.g-bl { grid-column: 1; grid-row: 2; }
+.g-tr { grid-column: 5; grid-row: 1; }
+.g-br { grid-column: 5; grid-row: 2; }
+.g-c2t { grid-column: 2; grid-row: 1; }
+.g-c2b { grid-column: 2; grid-row: 2; }
+.g-c4t { grid-column: 4; grid-row: 1; }
+.g-c4b { grid-column: 4; grid-row: 2; }
+
+/* ===========================================================
+   CTA box (panel C)
+   =========================================================== */
+.cta {
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  text-align: center; gap: 16px;
+  padding: clamp(26px, 4vh, 56px) var(--pad);
+}
+.cta h2 { font-weight: 900; font-size: clamp(30px, 4.2vw, 58px); line-height: 1.05; }
+.cta p  { max-width: 50ch; color: rgba(255,255,255,.92); }
+.cta__bar {
+  margin-top: 26px; width: 100%; padding-top: 22px;
+  border-top: 1px solid rgba(255,255,255,.25);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 18px; flex-wrap: wrap; font-size: 14px; color: rgba(255,255,255,.9);
+}
+.cta__bar nav { display: flex; gap: 26px; }
+
+/* ===========================================================
+   Reveal
+   =========================================================== */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal.is-in { opacity: 1; transform: none; }
+
+/* ===========================================================
+   Responsive
+   =========================================================== */
+@media (max-width: 920px) {
+  .nav__links { gap: 20px; }
+  .box { height: auto; min-height: var(--box-h); }
+  .panel__box { flex: 0 0 auto; }
+  .forefront { grid-template-columns: 1fr; }
+  .slider { min-height: 300px; }
+  .head--right { align-items: stretch; }
+  .head--right .head__inner { width: 100%; }
+  .grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto auto; }
+  .grid__media { grid-column: 1 / span 2; grid-row: 1; margin: 0; min-height: 230px; }
+  .g-tl { grid-column: 1; grid-row: 2; } .g-tr { grid-column: 2; grid-row: 2; }
+  .g-bl { grid-column: 1; grid-row: 3; } .g-br { grid-column: 2; grid-row: 3; }
+  .deco { display: none; }
+  .head--right h2, .head--right p { margin-left: 0; }
+}
+@media (max-width: 600px) {
+  .nav__links a:not(.btn) { display: none; }
+  .hero { height: 100vh; }
+  .grid { grid-template-columns: 1fr; }
+  .grid__media { grid-column: 1; }
+  .g-tl,.g-tr,.g-bl,.g-br { grid-column: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .wheel__grad { animation: none; }
+  .reveal { transition: none; opacity: 1; transform: none; }
+}

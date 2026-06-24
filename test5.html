@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QustomDot — Quantum Dot Inkjet Inks</title>
+  <meta name="description" content="Color conversion technologies for the next generation of displays. QustomJet™ — Cd-free Quantum Dot inkjet inks." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
+
+  <link rel="icon" href="assets/logo.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+
+    /* ── Roboto everywhere; one consistent (lighter) weight for all titles ── */
+    .hero__head h1,
+    .forefront__text h2,
+    .apps__item h3,
+    .adv-body h3,
+    .cta h2 { font-weight: 700; }
+    .forefront__text h2 { font-size: clamp(18px, 1.5vw, 26px) !important; letter-spacing: normal; line-height: 1.2; }
+
+    /* ── section 1: split layout — panel__box becomes the grid ── */
+    .panel__box.forefront-split {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      align-items: start;
+      gap: clamp(10px, 1.2vw, 16px);
+    }
+    .forefront__left {
+      /* inherits height: var(--box-h) from .box */
+      display: flex; flex-direction: column; justify-content: center;
+      padding: clamp(22px, 3vh, 34px) clamp(24px, 3vw, 44px);
+    }
+    .forefront__text p { max-width: clamp(260px, 28vw, 420px); }
+    /* carousel — right 2/3, same height as the left box */
+    .slider-deck {
+      height: var(--box-h);
+      border-radius: 26px;
+      overflow: hidden;
+    }
+    .slider-deck .slider {
+      height: 100%;
+    }
+
+    /* ── APPLICATIONS: 3-col grid matching the cards section below ── */
+    .apps {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: auto 1fr 1fr;
+      min-height: clamp(700px, 88vh, 960px);
+      box-sizing: border-box;
+      column-gap: clamp(16px, 1.6vw, 24px);
+      row-gap: clamp(28px, 4vh, 52px);
+      padding: clamp(80px, 11vh, 130px) var(--gutter) clamp(28px, 3.5vh, 48px);
+    }
+    /* QustomJet info: full-width header — [title+eyebrow col1] | desc cols 2-3 */
+    .apps__info {
+      grid-column: 1 / -1; grid-row: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      column-gap: clamp(16px, 1.6vw, 24px);
+      align-items: start;
+      padding: clamp(22px, 2.4vw, 34px) clamp(24px, 2.6vw, 38px);
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(255,255,255,.34), rgba(255,255,255,.06));
+      border: 1.5px solid rgba(255,255,255,.6);
+      box-shadow: inset 0 0 16px rgba(255,255,255,.18);
+      backdrop-filter: blur(14px) saturate(1.3);
+      -webkit-backdrop-filter: blur(14px) saturate(1.3);
+    }
+    .apps__info__left {
+      display: flex; flex-direction: row;
+      align-items: flex-start;
+      gap: clamp(14px, 1.4vw, 22px);
+    }
+    .apps__info__left .apps__eyebrow { margin: 0; }
+    .apps__right-top  { grid-column: 2 / 4; grid-row: 2; display: flex; flex-direction: column; min-height: 0; padding-left: clamp(18px, 2.2vw, 40px); }
+    .apps__right-top .apps__apps-head { flex-shrink: 0; margin-bottom: clamp(12px, 2vh, 22px); }
+    .apps__devices-pair {
+      flex: 1; min-height: 0;
+      display: grid; grid-template-columns: 1fr 1fr;
+      column-gap: clamp(24px, 3vw, 60px);
+      align-items: stretch;
+    }
+    .apps__right-bottom {
+      grid-column: 2 / 4; grid-row: 3; align-self: stretch; padding-left: clamp(18px, 2.2vw, 40px);
+      display: grid; grid-template-columns: 1fr 1fr;
+      column-gap: clamp(24px, 3vw, 60px);
+      align-items: stretch;
+    }
+
+    /* ── 3D tech preview — col 1, spans both device rows ── */
+    .tech-preview {
+      grid-column: 1; grid-row: 2 / 4;
+      position: relative; border-radius: 16px; overflow: hidden; cursor: pointer;
+      align-self: stretch;
+      background: #14100d;
+    }
+    .tech-preview img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .tech-preview__overlay {
+      position: absolute; inset: 0; display: flex; align-items: flex-end;
+      padding: clamp(14px, 1.8vw, 22px);
+      background: linear-gradient(to top, rgba(0,0,0,.52), rgba(0,0,0,.06) 48%, transparent 72%);
+    }
+    .tech-preview__cta {
+      display: inline-flex; align-items: center; gap: clamp(10px, 1.1vw, 16px);
+      padding: clamp(10px,1vw,14px) clamp(12px,1.2vw,18px);
+      border-radius: 12px; color: #fff;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.3);
+      backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4);
+      transition: background .25s, transform .25s;
+    }
+    .tech-preview:hover .tech-preview__cta { background: rgba(255,255,255,.2); transform: translateY(-2px); }
+    .tech-preview__text { display: flex; flex-direction: column; gap: 2px; }
+    .tech-preview__title { font-weight: 700; font-size: clamp(13px, 1.1vw, 16px); line-height: 1.15; }
+    .tech-preview__sub { font-size: clamp(11px, .82vw, 13px); color: rgba(255,255,255,.8); }
+    .tech-preview__arrow {
+      display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(255,255,255,.18); flex-shrink: 0; transition: background .25s, transform .25s;
+    }
+    .tech-preview__arrow svg { width: 15px; height: 15px; }
+    .tech-preview:hover .tech-preview__arrow { background: rgba(255,255,255,.32); transform: translateX(3px); }
+
+    /* ── fullscreen 3D experience overlay ── */
+    .exp-overlay {
+      position: fixed; inset: 0; z-index: 200; background: #000;
+      opacity: 0; pointer-events: none; transition: opacity .5s ease;
+    }
+    .exp-overlay.is-open { opacity: 1; pointer-events: all; }
+    .exp-overlay iframe { width: 100%; height: 100%; border: none; display: block; }
+    .exp-close {
+      position: absolute; top: 22px; right: 26px; z-index: 10;
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.18);
+      color: #fff; font-size: 20px; line-height: 1; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(8px); transition: background .2s; font-family: inherit;
+    }
+    .exp-close:hover { background: rgba(255,255,255,.22); }
+    .apps__title { margin: 0; color: var(--ink); }
+
+    /* one consistent style + size for all section headings (hero excluded) */
+    .forefront__text h2,
+    .apps__title,
+    .cta h2 {
+      font-weight: 700;
+      font-size: clamp(26px, 3vw, 40px);
+      line-height: 1.08;
+      letter-spacing: -.5px;
+    }
+    .apps__eyebrow { margin: 6px 0 0; font-size: clamp(13px, 1vw, 15px); font-weight: 500; color: var(--ink-soft); line-height: 1.4; }
+    .apps__desc { grid-column: 2 / -1; margin: 0; max-width: none; font-size: var(--fs-body); font-weight: 400; line-height: 1.6; color: var(--ink-soft); }
+    .apps__apps-head { }
+    .apps__apps-label { font-weight: 700; font-size: clamp(13px, 1vw, 15px); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 8px; }
+    .apps__apps-desc { font-size: var(--fs-body); line-height: 1.6; color: var(--ink-soft); }
+    .apps__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: clamp(24px, 3vw, 60px);
+      row-gap: clamp(16px, 2vh, 28px);
+    }
+    .apps__item { display: flex; flex-direction: column; }
+    .apps__item p { white-space: nowrap; }
+    /* title: gradient on the name, black number inline superscript top-left */
+    .apps__item h3 {
+      font-weight: 700;
+      font-size: clamp(18px, 1.5vw, 26px);
+      margin-bottom: 9px;
+      line-height: 1.1;
+      background: var(--heading-grad);
+      -webkit-background-clip: text; background-clip: text;
+      color: transparent; -webkit-text-fill-color: transparent;
+      display: inline-flex;
+      align-items: flex-start;
+      gap: 3px;
+    }
+    .apps__num {
+      font-size: 0.48em; font-weight: 700;
+      line-height: 1;
+      color: var(--ink);
+      -webkit-text-fill-color: var(--ink);
+      background: none;
+      flex-shrink: 0;
+      margin-top: 0.1em;
+    }
+    .apps__item p { font-size: var(--fs-body); line-height: 1.55; color: var(--ink-soft); }
+
+    /* ── isometric layered glass device ── */
+    .apps__device { margin-top: clamp(16px, 2.5vh, 30px); display: flex; justify-content: flex-start; }
+    .iso-wrap {
+      position: relative; height: clamp(110px, 14vh, 150px);
+      display: inline-flex; align-items: center; justify-content: flex-start;
+      perspective: 950px; perspective-origin: 50% 38%;
+    }
+    .iso-halo {
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+      width: 150px; height: 150px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,122,48,.5), transparent 68%);
+      filter: blur(8px); animation: glow 6s ease-in-out infinite;
+    }
+    .iso-shadow {
+      position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%);
+      width: 110px; height: 16px; border-radius: 50%;
+      background: rgba(150,86,48,.3); filter: blur(8px);
+    }
+    .iso { position: relative; transform-style: preserve-3d; }
+    .iso--tv   { width: 152px; height: 88px;  }
+    .iso--sign { width: 78px;  height: 152px; }
+    .iso--wear { width: 104px; height: 116px; }
+    .iso--auto { width: 184px; height: 66px;  }
+
+    .pane { position: absolute; inset: 0; border-radius: 14px; box-sizing: border-box; }
+    .iso--wear .pane { border-radius: 30px; }
+    .iso--auto .pane { border-radius: 16px; }
+
+    .pane--back, .pane--front {
+      background: linear-gradient(135deg, rgba(255,255,255,.34), rgba(255,255,255,.06));
+      border: 1.5px solid rgba(255,255,255,.6);
+      box-shadow: inset 0 0 16px rgba(255,255,255,.18);
+    }
+    .pane--back  { transform: translateZ(-34px); }
+    .pane--front { transform: translateZ(34px); }
+
+    .pane--screen {
+      inset: 6px; transform: translateZ(0);
+      background: linear-gradient(155deg, #ffce8f 0%, #ff7a30 55%, #e8330f 100%);
+      box-shadow: 0 0 30px rgba(255,110,40,.6); border-radius: 11px;
+    }
+    .iso--wear .pane--screen { border-radius: 26px; }
+    .iso--auto .pane--screen { border-radius: 13px; }
+
+    @keyframes isoFloat {
+      0%,100% { transform: rotateX(13deg) rotateY(-34deg) translateY(6px); }
+      50%     { transform: rotateX(13deg) rotateY(-28deg) translateY(18px); }
+    }
+    @keyframes glow { 0%,100% { opacity:.7 } 50% { opacity:1 } }
+    .iso { animation: isoFloat 8s ease-in-out infinite; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .iso { animation: none; transform: rotateX(13deg) rotateY(-31deg); }
+      .iso-halo { animation: none; }
+    }
+    @media (max-width: 960px) { .apps { grid-template-columns: 1fr; row-gap: 48px; } }
+    @media (max-width: 560px) { .apps__list { grid-template-columns: repeat(2,1fr); row-gap: 40px; } }
+
+    /* ── 3 colour advantage cards (hover to reveal detail) ── */
+    .cards-section { padding: clamp(80px,11vh,130px) var(--gutter) clamp(16px,2vh,24px); }
+    .cards__header {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      column-gap: clamp(16px, 1.6vw, 24px);
+      align-items: start;
+      margin-bottom: clamp(24px, 3.5vh, 48px);
+      padding: clamp(14px, 1.6vw, 22px) clamp(18px, 2vw, 28px);
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(255,255,255,.34), rgba(255,255,255,.06));
+      border: 1.5px solid rgba(255,255,255,.6);
+      box-shadow: inset 0 0 16px rgba(255,255,255,.18);
+      backdrop-filter: blur(14px) saturate(1.3);
+      -webkit-backdrop-filter: blur(14px) saturate(1.3);
+    }
+    .cards__header__left {
+      display: flex; flex-direction: row;
+      align-items: flex-start;
+      gap: clamp(14px, 1.4vw, 22px);
+    }
+    .cards__header__left .apps__eyebrow { margin: 0; }
+    .cards__header__desc { grid-column: 2 / -1; margin: 0; font-size: var(--fs-body); line-height: 1.6; color: var(--ink-soft); }
+    .adv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(14px, 1.6vw, 24px); height: var(--box-h); }
+    .adv-card {
+      border-radius: 22px; overflow: hidden;
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: clamp(22px, 2.2vw, 34px); color: #fff;
+      backdrop-filter: blur(7px) saturate(1.05); -webkit-backdrop-filter: blur(7px) saturate(1.05);
+      border: 1px solid rgba(255,255,255,.2);
+      box-shadow: 0 24px 50px -30px rgba(120,30,10,.45);
+      cursor: pointer;
+      transition: transform .45s var(--ease), box-shadow .45s var(--ease);
+    }
+    .adv-card:hover { transform: translateY(-8px); box-shadow: 0 44px 70px -32px rgba(120,30,10,.6); }
+    .adv-icon { width: clamp(38px, 3.4vw, 56px); height: auto; flex-shrink: 0; transition: transform .45s var(--ease); }
+    .adv-card:hover .adv-icon { transform: scale(1.08); }
+    .adv-body { display: flex; flex-direction: column; gap: 9px; }
+    .adv-body h3 { font-weight: 700; font-size: clamp(15px, 1.3vw, 20px); letter-spacing: .3px; text-transform: uppercase; line-height: 1.1; }
+    .adv-body > p { font-size: var(--fs-body); line-height: 1.5; color: rgba(255,255,255,.92); }
+
+    /* hover detail */
+    .adv-detail {
+      display: grid; grid-template-rows: 0fr; opacity: 0; margin-top: 0;
+      transition: grid-template-rows .55s var(--ease), opacity .4s var(--ease), margin-top .45s var(--ease);
+    }
+    .adv-card:hover .adv-detail { grid-template-rows: 1fr; opacity: 1; margin-top: 14px; }
+    .adv-detail__inner { overflow: hidden; min-height: 0; }
+    .adv-detail__rule {
+      height: 1.5px; background: rgba(255,255,255,.5); border-radius: 2px;
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .55s var(--ease) .05s; margin-bottom: 13px;
+    }
+    .adv-card:hover .adv-detail__rule { transform: scaleX(1); }
+    .adv-detail p { font-size: clamp(11px,.85vw,13px); line-height: 1.55; color: rgba(255,255,255,.9); }
+    .adv-detail ul { list-style: none; margin-top: 11px; display: flex; flex-direction: column; gap: 7px; }
+    .adv-detail li { position: relative; padding-left: 17px; font-size: clamp(11px,.82vw,12.5px); color: rgba(255,255,255,.82); }
+    .adv-detail li::before { content: ""; position: absolute; left: 0; top: .58em; width: 9px; height: 1.5px; background: rgba(255,255,255,.7); border-radius: 2px; }
+
+    @media (max-width: 720px) {
+      .adv-grid { grid-template-columns: 1fr; height: auto; gap: 16px; }
+      .adv-card { min-height: 220px; }
+    }
+
+    /* ── showcase video inside CTA ── */
+    .video-box {
+      position: relative; overflow: hidden; background: #14100d;
+      border-radius: 18px;
+      margin: clamp(12px,2vh,20px);
+    }
+    .video-box video { width: 100%; height: 100%; object-fit: cover; display: block; cursor: pointer; }
+
+    /* ── full-width team video teaser ── */
+    .about-video {
+      position: relative; width: 100%;
+      height: clamp(340px, 54vh, 600px);
+      border-radius: 18px; overflow: hidden; cursor: pointer;
+      background: #14100d;
+      transition: left .6s cubic-bezier(.7,0,.2,1), top .6s cubic-bezier(.7,0,.2,1),
+                  width .6s cubic-bezier(.7,0,.2,1), height .6s cubic-bezier(.7,0,.2,1),
+                  border-radius .6s cubic-bezier(.7,0,.2,1);
+    }
+    .about-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .about-video__overlay {
+      position: absolute; inset: 0; display: flex; align-items: flex-end;
+      padding: clamp(20px, 2.6vw, 40px);
+      background: linear-gradient(to top, rgba(0,0,0,.5), rgba(0,0,0,.06) 46%, transparent 74%);
+    }
+    .about-video__cta {
+      display: inline-flex; align-items: center; gap: clamp(14px, 1.4vw, 22px);
+      padding: clamp(15px,1.4vw,20px) clamp(18px,1.7vw,26px);
+      border-radius: 16px; color: #fff;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.3);
+      backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4);
+      transition: background .25s, transform .25s;
+    }
+    .about-video:hover .about-video__cta { background: rgba(255,255,255,.2); transform: translateY(-2px); }
+    .about-video__text { display: flex; flex-direction: column; gap: 3px; }
+    .about-video__title { font-weight: 700; font-size: clamp(17px,1.5vw,23px); line-height: 1.15; }
+    .about-video__sub { font-size: clamp(12px,1vw,14.5px); color: rgba(255,255,255,.82); }
+    .about-video__arrow {
+      display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(255,255,255,.18); flex-shrink: 0; transition: background .25s, transform .25s;
+    }
+    .about-video__arrow svg { width: 18px; height: 18px; }
+    .about-video:hover .about-video__arrow { background: rgba(255,255,255,.32); transform: translateX(3px); }
+    /* expand-to-fullscreen on click */
+    .about-video.is-expanding { position: fixed; z-index: 9000; margin: 0; }
+    .about-video.is-expanding .about-video__overlay { opacity: 0; transition: opacity .35s ease; }
+
+    /* CTA wrapper */
+    .cta {
+      display: block !important;
+      padding: 0 !important;
+      text-align: left !important;
+    }
+    /* "Get to know us" row — text left (1fr), media right (2fr) */
+    .cta__intro {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      align-items: stretch;
+    }
+    .cta__content {
+      display: flex; flex-direction: column; justify-content: flex-start;
+      gap: 16px;
+      padding: clamp(26px,4vh,56px) 0 clamp(12px,2vh,20px);
+    }
+    /* indent heading/subtext/button to the same x as "Ultimate performance
+       across devices" (the .apps section pads by var(--pad), not var(--gutter)).
+       The supporters box stays full-width at the gutter edge; only its inner
+       content lines up here too via its own padding. */
+    .cta__content > h2,
+    .cta__content > p,
+    .cta__content > .btn {
+      margin-left: calc(var(--pad) - var(--gutter));
+    }
+    .supporters { padding-left: calc(var(--pad) - var(--gutter)); }
+    /* supporters card — left third (as wide as an advantage card), glass texture */
+    .supporters {
+      /* pinned to the bottom of the column so it aligns with the video's bottom edge */
+      margin-top: auto;
+      width: 100%;
+      display: flex; flex-direction: column; justify-content: center;
+      min-height: clamp(180px, 24vh, 240px);
+      border-radius: 16px;
+      padding: clamp(22px,2.2vw,32px) clamp(20px,2vw,28px);
+      /* frosted glass — same texture as the isometric device panes */
+      background: linear-gradient(135deg, rgba(255,255,255,.34), rgba(255,255,255,.06));
+      border: 1.5px solid rgba(255,255,255,.6);
+      box-shadow: inset 0 0 16px rgba(255,255,255,.18);
+      backdrop-filter: blur(14px) saturate(1.3);
+      -webkit-backdrop-filter: blur(14px) saturate(1.3);
+    }
+    .supporters__label {
+      display: block;
+      font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--ink); opacity: .65; margin-bottom: 18px;
+    }
+    .supporters__grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      align-items: center; gap: clamp(16px,1.8vw,28px) clamp(16px,1.6vw,26px);
+    }
+    .supporters__grid img {
+      height: clamp(22px,2vw,34px); width: 100%;
+      object-fit: contain; object-position: left center; opacity: .92;
+      /* white-on-transparent logos → render dark so they read on the light glass */
+      filter: brightness(0) invert(0) opacity(.78);
+      transition: opacity .25s ease;
+    }
+    .supporters__grid img:hover { opacity: 1; }
+    /* full-width supported-by bar (under the team video) */
+    .supporters--bar {
+      margin-top: clamp(12px,2vh,20px);
+      min-height: 0;
+      padding: clamp(18px,1.8vw,26px) clamp(22px,2vw,34px);
+      padding-left: clamp(22px,2vw,34px);
+      flex-direction: row; align-items: center; flex-wrap: wrap;
+      gap: clamp(18px,2.4vw,40px);
+    }
+    .supporters--bar .supporters__label { margin-bottom: 0; flex-shrink: 0; }
+    .supporters--bar .supporters__grid {
+      flex: 1; grid-template-columns: repeat(6, 1fr);
+      gap: clamp(16px,2vw,40px);
+    }
+    @media (max-width: 760px) {
+      .supporters--bar .supporters__grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .cta__content h2 { font-weight: 900; font-size: clamp(22px,2.8vw,42px); line-height: 1.1; color: var(--ink); }
+    .cta__content p { max-width: 40ch; color: var(--ink-soft); font-size: var(--fs-body); line-height: 1.6; }
+    .btn--grad {
+      background: var(--heading-grad);
+      color: #fff; font-weight: 700;
+      border: none;
+    }
+    .cta__bottom {
+      grid-column: 1 / -1;
+      /* full content width (gutter to gutter), matching the other boxes */
+      margin: clamp(12px,2vh,20px) 0 0;
+      background: var(--card-orange);
+      border-radius: 18px;
+      padding: clamp(40px,6vh,72px) var(--pad) clamp(24px,3vh,40px);
+    }
+    .cta__bottom-grid {
+      display: grid; grid-template-columns: 1fr 2fr;
+      gap: clamp(28px,4vw,64px); align-items: start;
+    }
+    .cta__bottom-text h2 { font-weight: 900; font-size: clamp(24px,3.2vw,48px); line-height: 1.1; color: #fff; }
+    .cta__bottom-text p { margin-top: 16px; color: rgba(255,255,255,.92); }
+    /* contact form (2/3, on orange) */
+    .cta__form {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: clamp(12px,1.4vw,18px);
+    }
+    .cta__form .field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+    .cta__form .field--full { grid-column: 1 / -1; }
+    .cta__form label { font-size: 12px; font-weight: 600; letter-spacing: .02em; color: rgba(255,255,255,.85); }
+    .cta__form input,
+    .cta__form select,
+    .cta__form textarea {
+      width: 100%; font: inherit; font-size: 14px; color: #fff;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.32);
+      border-radius: 10px; padding: 11px 13px;
+      transition: border-color .2s, background-color .2s;
+    }
+    .cta__form textarea { resize: vertical; min-height: 96px; }
+    .cta__form input::placeholder,
+    .cta__form textarea::placeholder { color: rgba(255,255,255,.55); }
+    .cta__form input:focus,
+    .cta__form select:focus,
+    .cta__form textarea:focus {
+      outline: none; border-color: #fff; background: rgba(255,255,255,.2);
+    }
+    .cta__form select { appearance: none; -webkit-appearance: none; cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23fff' d='M6 8 0 0h12z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center; padding-right: 34px;
+    }
+    .cta__form select option { color: var(--ink); }
+    .cta__form .btn--grad { margin-top: 4px; justify-self: start; padding-left: 34px; padding-right: 34px; }
+    .cta__bar { margin-top: 16px; width: 100%; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.28); color: rgba(255,255,255,.92); display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; font-size: 14px; }
+    .cta__bar nav { display: flex; gap: 26px; }
+    .cta__bar nav a, .cta__bar span { color: rgba(255,255,255,.92); }
+    .cta-section { padding: clamp(40px,7vh,90px) var(--gutter) var(--gutter); }
+
+    .video-play {
+      position: absolute; inset: 0; margin: auto;
+      width: 88px; height: 88px; border-radius: 50%;
+      display: grid; place-items: center; cursor: pointer; color: #fff;
+      background: rgba(255,255,255,.16);
+      backdrop-filter: blur(10px) saturate(1.4); -webkit-backdrop-filter: blur(10px) saturate(1.4);
+      border: 1.5px solid rgba(255,255,255,.65);
+      transition: opacity .4s, transform .3s;
+    }
+    .video-play:hover { transform: scale(1.07); }
+    .video-play svg { width: 30px; height: 30px; margin-left: 4px; }
+    .video-play.is-hidden { opacity: 0; pointer-events: none; transform: scale(.8); }
+
+    .video-sound {
+      position: absolute; right: 20px; bottom: 20px;
+      width: 48px; height: 48px; border-radius: 50%;
+      display: grid; place-items: center; cursor: pointer; color: #fff;
+      background: rgba(20,16,12,.42);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,.4);
+      opacity: 0; pointer-events: none; transition: opacity .4s;
+    }
+    .video-sound.is-shown { opacity: 1; pointer-events: auto; }
+    .video-sound svg { width: 22px; height: 22px; }
+
+    /* ── CTA section (no heading) ── */
+    .cta-section { padding: clamp(40px,7vh,90px) var(--gutter) var(--gutter); }
+
+    /* ── intro overlay ── */
+    .intro-stage {
+      position: fixed; inset: 0; z-index: 20;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: clamp(18px, 2.4vw, 34px); text-align: center; padding: 0 24px;
+      pointer-events: none; opacity: 0;     /* JS drives opacity (forms in, fades out) */
+      will-change: opacity;
+    }
+    .intro-logo { width: clamp(210px, 25vw, 360px); height: auto; }
+    .intro-sub  { margin: 0; font-size: clamp(18px, 1.9vw, 28px); font-weight: 400; line-height: 1.45; color: var(--ink-soft); }
+    /* during the intro, the page chrome is hidden; it fades in on release */
+    .nav, .hero__sticky { transition: opacity .85s ease; }
+    body.intro .nav, body.intro .hero__sticky { opacity: 0; }
+    .wheel { transition: none; }
+
+    /* Q icon fixed dead-centre, fades in after intro, fades out on scroll */
+    .orb-logo {
+      position: fixed;
+      left: 50%; top: 28vh;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      pointer-events: none;
+      width: clamp(90px, 10vw, 150px);
+      height: auto;
+      opacity: 0;
+      transition: opacity .5s ease;
+    }
+    body:not(.intro) .orb-logo { opacity: 1; }
+    .orb-logo.is-hidden { opacity: 0 !important; }
+
+    /* hero head: h1 fills left lane (between screen edge and orb edge), p fills right lane */
+    /* hero: one big, clear, centred main title sitting in the orb's hollow
+       centre (on plain cream → legible). Subtitle beneath. */
+    .hero__head {
+      position: relative !important;
+      display: flex !important; flex-direction: column;
+      align-items: center; justify-content: center !important;
+      text-align: center;
+      /* offset the top by the nav height so the text centres in the white
+         space between the nav and the first box (not behind the nav) */
+      padding-top: clamp(70px, 9vh, 96px) !important; padding-bottom: 0 !important;
+      gap: 14px;
+    }
+    .hero__head h1 {
+      font-weight: 900 !important;
+      font-size: clamp(34px, 5.8vw, 76px) !important;
+      line-height: 1.02 !important;
+      letter-spacing: -.5px;
+      /* the website's colour gradient, but kept in the saturated red→orange
+         range so it stays clearly legible on the cream background */
+      background: linear-gradient(100deg, #d4140a 0%, #ef4a1f 50%, #f4791f 100%);
+      -webkit-background-clip: text; background-clip: text;
+      color: transparent; -webkit-text-fill-color: transparent;
+    }
+    .hero__head p {
+      margin: 0;
+      font-weight: 400;
+      font-size: var(--fs-body);
+      letter-spacing: normal;
+      color: var(--ink-soft);
+    }
+
+    /* nav bar as wide as the sections (gutter to gutter, not a centered pill) */
+    .nav { left: var(--gutter); right: var(--gutter); transform: none; }
+    /* nav CTA button uses the same red as the "High Performance" card */
+    .nav .btn--red { background: rgba(225,29,23,0.88); }
+    .nav .btn--red:hover { background: rgba(205,23,15,0.92); }
+  </style>
+</head>
+<body class="intro">
+
+
+
+<!-- hidden SVG: liquid-glass displacement filter for the headline -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden;pointer-events:none">
+  <defs>
+    <filter id="lgtxt" color-interpolation-filters="sRGB" x="-4%" y="-30%" width="108%" height="160%">
+      <!-- per-channel displacement for chromatic-aberration refraction -->
+      <feTurbulence type="fractalNoise" baseFrequency="0.016 0.024" numOctaves="2" seed="8" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G" result="disp"/>
+      <feGaussianBlur in="disp" stdDeviation="0.5"/>
+    </filter>
+  </defs>
+</svg>
+
+  <!-- the drifting colour wheel -->
+  <div class="wheel" aria-hidden="true"><div class="wheel__grad"></div></div>
+
+  <!-- intro overlay: big logo inside the orb + subtitle, dismissed on first scroll -->
+  <div class="intro-stage" data-intro>
+    <img class="intro-logo" src="assets/g22.png" alt="QustomDot" />
+  </div>
+
+  <!-- header -->
+  <header class="nav">
+    <a class="brand" href="#"><img src="assets/logo.png" alt="QustomDot" /></a>
+    <nav class="nav__links">
+      <a href="#products">Products</a>
+      <a href="#about">About Us</a>
+      <a class="btn btn--red" href="#contact">Request a sample</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ============ PANEL A — HERO (pinned) ============ -->
+    <section class="hero" id="top">
+      <div class="hero__sticky">
+        <div class="panel__head hero__head">
+          <h1>Quantum Dot Inkjet Inks</h1>
+          <p>On-chip quantum dot color conversion — without cadmium.</p>
+        </div>
+
+        <div class="panel__box forefront-split">
+          <div class="box box--card forefront__left">
+            <div class="forefront__text">
+              <h2>QustomJet™ — Quantum dot ink, ready for your line</h2>
+              <p>Our cadmium-free quantum dot ink is engineered for direct on-chip integration. High efficiency, lower production cost, and compatible with industrial inkjet lines.</p>
+              <p style="margin-top:.8em;"><strong>Blue-to-red conversion at 2.5× the efficiency of native red.</strong></p>
+              <a class="btn btn--light" href="#contact" style="margin-top:1.4em;display:inline-block;">Request a sample</a>
+            </div>
+          </div>
+          <div class="slider-deck">
+            <div class="slider" id="heroSlider">
+              <div class="slide">
+                <img src="assets/DSC_3594.jpg" alt="QustomJet™ quantum dot ink" />
+              </div>
+              <div class="slide">
+                <img src="assets/DSC_3717.jpg" alt="QustomJet™ lab" />
+              </div>
+              <div class="slide">
+                <img src="assets/DSC_4076.jpg" alt="QustomJet™ production" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ APPLICATIONS ============ -->
+    <section class="apps" id="advantages">
+      <!-- [row 1, col 1] QustomJet™ product info -->
+      <div class="apps__info">
+        <div class="apps__info__left">
+          <h2 class="apps__title">QustomJet™</h2>
+          <p class="apps__eyebrow">Quantum dot inkjet ink for on-chip color conversion</p>
+        </div>
+        <p class="apps__desc">QustomJet™ is our flagship line of cadmium-free quantum dot inks, engineered for direct integration into industrial inkjet manufacturing lines. Solvent-free, UV-curable, and ready for your production process.</p>
+      </div>
+
+      <!-- [row 1, col 2] Applications header + first row of devices (TV + Signage) -->
+      <div class="apps__right-top">
+        <div class="apps__devices-pair">
+          <div class="apps__item">
+            <h3><span class="apps__num">01</span>Television</h3>
+            <p>Wide-gamut color for premium panels.</p>
+            <div class="apps__device"><div class="iso-wrap">
+              <div class="iso-halo"></div><div class="iso-shadow"></div>
+              <div class="iso iso--tv" style="animation-delay:0s">
+                <div class="pane pane--back"></div><div class="pane pane--screen"></div><div class="pane pane--front"></div>
+              </div>
+            </div></div>
+          </div>
+          <div class="apps__item">
+            <h3><span class="apps__num">02</span>Signage</h3>
+            <p>Vivid, durable large-format color.</p>
+            <div class="apps__device"><div class="iso-wrap">
+              <div class="iso-halo"></div><div class="iso-shadow"></div>
+              <div class="iso iso--sign" style="animation-delay:-2s">
+                <div class="pane pane--back"></div><div class="pane pane--screen"></div><div class="pane pane--front"></div>
+              </div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- [row 2, col 1] How our tech works -->
+      <div class="tech-preview" id="techPreview" role="button" tabindex="0" aria-label="How our tech works">
+        <img src="qustomdot experience/Screenshot 2026-06-15 at 20.25.21.png" alt="QustomJet™ 3D technology preview" />
+        <div class="tech-preview__overlay">
+          <div class="tech-preview__cta">
+            <span class="tech-preview__text">
+              <span class="tech-preview__title">How our tech works</span>
+              <span class="tech-preview__sub">Explore QustomJet™ in 3D</span>
+            </span>
+            <span class="tech-preview__arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- [row 2, col 2] Second row of devices (Wearables + Automotive) -->
+      <div class="apps__right-bottom">
+        <div class="apps__item">
+          <h3><span class="apps__num">03</span>Wearables</h3>
+          <p>Efficient color for compact screens.</p>
+          <div class="apps__device"><div class="iso-wrap">
+            <div class="iso-halo"></div><div class="iso-shadow"></div>
+            <div class="iso iso--wear" style="animation-delay:-4s">
+              <div class="pane pane--back"></div><div class="pane pane--screen"></div><div class="pane pane--front"></div>
+            </div>
+          </div></div>
+        </div>
+        <div class="apps__item">
+          <h3><span class="apps__num">04</span>Automotive</h3>
+          <p>Reliable color for in-cabin displays.</p>
+          <div class="apps__device"><div class="iso-wrap">
+            <div class="iso-halo"></div><div class="iso-shadow"></div>
+            <div class="iso iso--auto" style="animation-delay:-1s">
+              <div class="pane pane--back"></div><div class="pane pane--screen"></div><div class="pane pane--front"></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============ 3 COLOUR ADVANTAGE CARDS ============ -->
+    <section class="cards-section" id="products">
+      <div class="cards__header">
+        <div class="cards__header__left">
+          <h2 class="apps__title" style="font-size:clamp(22px,2.4vw,36px);">QustomDot</h2>
+          <p class="apps__eyebrow">A team built around color conversion</p>
+        </div>
+        <p class="cards__header__desc">Display scientists, ink chemists, and process engineers — making Cd-free Quantum Dot color conversion production-ready, from material synthesis to inkjet formulation.</p>
+      </div>
+      <div class="adv-grid">
+
+        <!-- 1. Full system — red -->
+        <div class="adv-card" style="background:rgba(225,29,23,0.88);">
+          <svg class="adv-icon" viewBox="0 0 56 44" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="8" width="20" height="14" rx="3"/>
+            <rect x="32" y="8" width="20" height="14" rx="3"/>
+            <rect x="16" y="30" width="24" height="10" rx="3"/>
+            <line x1="14" y1="22" x2="28" y2="30"/><line x1="42" y1="22" x2="28" y2="30"/>
+          </svg>
+          <div class="adv-body">
+            <h3>Co-Engineered</h3>
+            <p>We engineer the full system — not just the ink</p>
+            <div class="adv-detail"><div class="adv-detail__inner">
+              <div class="adv-detail__rule"></div>
+              <p>Other suppliers start with off-the-shelf quantum dots and adapt them into an ink. We co-engineer the QD surface and the ink formulation together from the start — so every batch is optimized for direct on-chip integration.</p>
+            </div></div>
+          </div>
+        </div>
+
+        <!-- 2. Device-ready — coral -->
+        <div class="adv-card" style="background:rgba(236,94,52,0.88);">
+          <svg class="adv-icon" viewBox="0 0 56 48" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="8" y="10" width="40" height="28" rx="3"/>
+            <line x1="20" y1="38" x2="20" y2="44"/><line x1="36" y1="38" x2="36" y2="44"/>
+            <line x1="14" y1="44" x2="42" y2="44"/>
+            <rect x="18" y="18" width="20" height="12" rx="2" stroke-width="1.6" opacity=".7"/>
+          </svg>
+          <div class="adv-body">
+            <h3>Chip-Ready</h3>
+            <p>Device-ready, out of the box</p>
+            <div class="adv-detail"><div class="adv-detail__inner">
+              <div class="adv-detail__rule"></div>
+              <p>QD materials alone can't go directly onto a chip. QustomJet™ is formulated specifically for inkjet deposition — no extra processing, no physical separation from the light source, no workarounds.</p>
+            </div></div>
+          </div>
+        </div>
+
+        <!-- 3. Protected science — orange -->
+        <div class="adv-card" style="background:rgba(244,121,31,0.88);">
+          <svg class="adv-icon" viewBox="0 0 56 52" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M28 4 L48 12 V26 C48 37 38 45 28 48 C18 45 8 37 8 26 V12 Z"/>
+            <polyline points="19,26 25,32 37,20"/>
+          </svg>
+          <div class="adv-body">
+            <h3>IP-Protected</h3>
+            <p>Built on protected science</p>
+            <div class="adv-detail"><div class="adv-detail__inner">
+              <div class="adv-detail__rule"></div>
+              <p>Our surface engineering methods, ligand library, and QustomJet™ Gen1 &amp; Gen2 formulations are patent-protected. When you build with QustomDot, you build on a defensible technology foundation.</p>
+            </div></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============ SHOWCASE VIDEO ============ -->
+    <!-- ============ CTA ============ -->
+    <section class="cta-section" id="about">
+      <div class="cta" id="contact">
+        <!-- full-width team video teaser → click expands & opens the About page -->
+        <div class="about-video" data-video-cta role="button" tabindex="0" aria-label="Get to know the team">
+          <video src="assets/showcase.mp4" autoplay muted loop playsinline poster="assets/showcase-poster.jpg"></video>
+          <div class="about-video__overlay">
+            <div class="about-video__cta">
+              <span class="about-video__text">
+                <span class="about-video__title">Get to know the team</span>
+                <span class="about-video__sub">Meet the scientists &amp; engineers behind QustomJet™</span>
+              </span>
+              <span class="about-video__arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- supported by — full width under the video -->
+        <div class="supporters supporters--bar">
+          <span class="supporters__label">Supported by</span>
+          <div class="supporters__grid">
+            <img src="assets/EIC-logo-FundedBy-WhiteText_EN_edited.avif" alt="EIC — Funded by the European Union" />
+            <img src="assets/VLAIO_sponsorlogo-transparant.avif" alt="VLAIO" />
+            <img src="assets/Noshaq white.avif" alt="Noshaq" />
+            <img src="assets/Untitled-1QBIC.avif" alt="QBIC" />
+            <img src="assets/Untitled-1PMV.avif" alt="PMV" />
+            <img src="assets/Untitled-1VIGO.avif" alt="VIGO" />
+          </div>
+        </div>
+        <div class="cta__bottom">
+          <div class="cta__bottom-grid">
+            <div class="cta__bottom-text">
+              <h2>Ready to build the next generation of displays?</h2>
+              <p>Get in touch to learn how QustomJet™ inks can power your wide-gamut, energy-efficient displays.</p>
+            </div>
+            <form class="cta__form" novalidate>
+              <div class="field">
+                <label for="f-first">First name</label>
+                <input id="f-first" name="first" type="text" autocomplete="given-name" />
+              </div>
+              <div class="field">
+                <label for="f-last">Last name</label>
+                <input id="f-last" name="last" type="text" autocomplete="family-name" />
+              </div>
+              <div class="field">
+                <label for="f-email">Email</label>
+                <input id="f-email" name="email" type="email" autocomplete="email" />
+              </div>
+              <div class="field">
+                <label for="f-phone">Phone</label>
+                <input id="f-phone" name="phone" type="tel" autocomplete="tel" />
+              </div>
+              <div class="field">
+                <label for="f-company">Company</label>
+                <input id="f-company" name="company" type="text" autocomplete="organization" />
+              </div>
+              <div class="field">
+                <label for="f-position">Position</label>
+                <input id="f-position" name="position" type="text" autocomplete="organization-title" />
+              </div>
+              <div class="field">
+                <label for="f-industry">Industry</label>
+                <select id="f-industry" name="industry">
+                  <option value="" selected disabled>Select…</option>
+                  <option>Display manufacturing</option>
+                  <option>Lighting</option>
+                  <option>Research &amp; academia</option>
+                  <option>Materials &amp; chemicals</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="f-application">Application</label>
+                <select id="f-application" name="application">
+                  <option value="" selected disabled>Select…</option>
+                  <option>MicroLED</option>
+                  <option>MiniLED</option>
+                  <option>OLED</option>
+                  <option>Photoluminescence</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="field field--full">
+                <label for="f-message">Message</label>
+                <textarea id="f-message" name="message" rows="4"></textarea>
+              </div>
+              <button class="btn btn--grad field--full" type="submit">Request a sample</button>
+            </form>
+          </div>
+          <div class="cta__bar">
+            <span>© 2026 QustomDot. All rights reserved.</span>
+            <nav><a href="#products">Products</a><a href="#about">About Us</a><a href="#contact">Contact</a></nav>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- test3 orb: section-aware position (LEFT on Applications) + gradient sync + reveal -->
+  <script>
+    (() => {
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+      const lerp =(a,b,t)=>a+(b-a)*t;
+      const smooth=t=>t*t*(3-2*t);
+      const wheel   = document.querySelector('.wheel');
+      const grad    = document.querySelector('.wheel__grad');
+      const orbLogo = document.querySelector('.orb-logo');
+      const gradTexts = [...document.querySelectorAll('.gradient-text')];
+
+      /* orb gradient rotation + headline anti-phase sync */
+      const ROT=(2*Math.PI)/22, BASE=135*Math.PI/180;
+      const RED=[232,25,11], CREAM=[246,199,156];
+      const mix=t=>{const u=clamp(t,0,1);return `rgb(${Math.round(CREAM[0]+(RED[0]-CREAM[0])*u)},${Math.round(CREAM[1]+(RED[1]-CREAM[1])*u)},${Math.round(CREAM[2]+(RED[2]-CREAM[2])*u)})`;};
+
+      // spin starts immediately from page load
+      const INIT_DEG = 45;
+      const spinT0 = Date.now();
+      function spinDeg(){
+        return INIT_DEG + (ROT * (Date.now()-spinT0)/1000) * 180/Math.PI;
+      }
+
+      // hide the Q icon the moment the page scrolls down
+      if(orbLogo){
+        addEventListener('scroll', () => {
+          orbLogo.classList.toggle('is-hidden', scrollY > 10);
+        }, {passive: true});
+      }
+
+      function updateGradients(){
+        const deg = spinDeg();
+        if(grad) grad.style.transform=`rotate(${(deg%360).toFixed(2)}deg)`;
+        const ph = (deg - INIT_DEG) * Math.PI/180;   // radians elapsed since spin started
+        const s=Math.sin(BASE+ph);
+        const g=`linear-gradient(to right, ${mix((1-s)/2)}, ${mix((1+s)/2)})`;
+        gradTexts.forEach(el=>{el.style.backgroundImage=g; el.style.backgroundSize='100% 100%';});
+      }
+
+      /* glass headline: filled with the orb's animated colour gradient, and a
+         white spot that tracks wherever the orb sits behind the letters */
+      const glassHead = document.querySelector('.glass-head');
+      const mixA=(t,a)=>{const u=clamp(t,0,1);return `rgba(${Math.round(CREAM[0]+(RED[0]-CREAM[0])*u)},${Math.round(CREAM[1]+(RED[1]-CREAM[1])*u)},${Math.round(CREAM[2]+(RED[2]-CREAM[2])*u)},${a})`;};
+      function updateHeadGlass(t, ox, oy, orbPx){
+        if(!glassHead) return;
+        const r=glassHead.getBoundingClientRect();
+        if(!r.width) return;
+        const s=Math.sin(BASE+ROT*t);
+        const cg=`linear-gradient(112deg, ${mixA((1-s)/2,0.82)}, ${mixA((1+s)/2,0.82)})`;
+        const px=((ox-r.left)/r.width*100);
+        const py=((oy-r.top)/r.height*100);
+        // white follows the orb's glowing RING (band ~72% of the orb radius),
+        // not its hollow centre — so the hole + outer areas show the gradient
+        const orbR=orbPx/2;
+        const inner=(orbR*0.54).toFixed(0), ring=(orbR*0.74).toFixed(0), outer=(orbR*0.98).toFixed(0);
+        const ringBand=`radial-gradient(circle at ${px.toFixed(1)}% ${py.toFixed(1)}%, rgba(255,255,255,0) 0, rgba(255,255,255,0) ${inner}px, rgba(255,255,255,0.98) ${ring}px, rgba(255,255,255,0) ${outer}px, rgba(255,255,255,0) 100%)`;
+        glassHead.style.setProperty('--head-bg', `${ringBand}, ${cg}`);
+      }
+
+      /* per-section orb centre (fraction of viewport) */
+      const secs = [
+        { el: document.getElementById('top'),          x:0.50, y:0.28 },  // hero — behind headline
+        { el: document.querySelector('.apps'),          x:0.15, y:0.58 },  // applications — LEFT white space
+        { el: document.querySelector('.cards-section'), x:0.55, y:0.55 },  // 3 cards
+        { el: document.querySelector('.cta-section'),   x:0.15, y:0.40 },  // get to know us — left
+      ].filter(s=>s.el);
+      // pick the last section whose top has passed the viewport centre —
+      // monotonic and gap-proof (avoids falling through to the last zone)
+      function baseTarget(){
+        const cy=innerHeight*0.5;
+        let pick=secs[0];
+        for(const s of secs){ if(s.el.getBoundingClientRect().top <= cy) pick=s; }
+        return pick;
+      }
+
+      /* ── intro: orb forms big & centred (with the logo), first scroll
+            morphs it into the hero "position 2" ── */
+      const introStage = document.querySelector('[data-intro]');
+      let introBlend = 1, releasing = false, releaseStart = 0;
+      const FORM_MS = 1000, RELEASE_MS = 950;
+      const lock = v => { const o = v ? 'hidden' : ''; document.documentElement.style.overflow = o; document.body.style.overflow = o; };
+      lock(true);
+      function release(){
+        if(releasing || introBlend === 0) return;
+        releasing = true; releaseStart = Date.now();
+        document.body.classList.remove('intro');
+        setTimeout(()=>lock(false), RELEASE_MS);
+      }
+      const onIntent = e => { if(introBlend > 0 && !releasing){ if(e.cancelable) e.preventDefault(); release(); } };
+      addEventListener('wheel', onIntent, {passive:false});
+      addEventListener('touchmove', onIntent, {passive:false});
+      addEventListener('keydown', e => { if(['ArrowDown','ArrowUp','PageDown','PageUp',' ','Spacebar','Enter'].includes(e.key)) onIntent(e); });
+      addEventListener('click', () => { if(introBlend > 0) release(); });
+
+      let curX=null, curY=null, logoCenterBlend=1, heroBlend=0;
+      const t0=Date.now();
+      function frame(){
+        const form = smooth(clamp((Date.now()-t0)/FORM_MS, 0, 1));            // orb forms over ~1s
+        if(releasing) introBlend = 1 - smooth(clamp((Date.now()-releaseStart)/RELEASE_MS, 0, 1));
+
+        const logoVisible = orbLogo && !orbLogo.classList.contains('is-hidden');
+        logoCenterBlend = lerp(logoCenterBlend, logoVisible ? 1 : 0, 0.06);
+
+        const t=(Date.now()-t0)/1000;
+        const b=baseTarget();
+        const size=wheel.offsetWidth;
+        const wx=Math.sin(t*0.11)*0.02 + Math.sin(t*0.047)*0.012;  // gentle life
+        const wy=Math.cos(t*0.09)*0.02 + Math.sin(t*0.037)*0.012;
+        const nx=b.x+wx, ny=b.y+wy;                                  // normal (hero/section) centre
+        const lx = lerp(nx, secs[0].x, logoCenterBlend);   // logo visible → lock to hero pos
+        const ly = lerp(ny, secs[0].y, logoCenterBlend);
+        const cxf = lerp(lx, 0.5, introBlend);             // intro override → dead centre
+        const cyf = lerp(ly, 0.5, introBlend);
+        const scrollFrac = Math.min(window.scrollY / 320, 1);
+        heroBlend = lerp(heroBlend, scrollFrac, 0.07);
+        // heroMult only applies post-intro (fades to 1 during intro so it doesn't affect intro size)
+        const heroMult = lerp(lerp(1.75, 1, heroBlend), 1, introBlend);
+        const scale=lerp(1, 1.85, introBlend) * lerp(0.25, 1, form) * heroMult;
+        const px=cxf*innerWidth  - size/2;
+        const py=cyf*innerHeight - size/2;
+        if(curX===null){curX=px; curY=py;}
+        const ease = Math.max(introBlend, logoCenterBlend)>0.02 ? 0.2 : 0.014;
+        curX=lerp(curX,px,ease); curY=lerp(curY,py,ease);
+        wheel.style.opacity=form.toFixed(3);
+        wheel.style.transform=`translate3d(${curX.toFixed(1)}px, ${curY.toFixed(1)}px, 0) scale(${scale.toFixed(3)})`;
+        if(introStage) introStage.style.opacity=(form*introBlend).toFixed(3);
+
+        updateGradients();
+        requestAnimationFrame(frame);
+      }
+      if(!reduce){ requestAnimationFrame(frame); }
+      else { introBlend=0; lock(false); document.body.classList.remove('intro'); updateGradients(); }
+
+      /* reveal */
+      const rev=document.querySelectorAll('.reveal');
+      if('IntersectionObserver' in window && !reduce){
+        const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-in');io.unobserve(e.target);}}),{threshold:.18});
+        rev.forEach(el=>io.observe(el));
+      } else rev.forEach(el=>el.classList.add('is-in'));
+    })();
+  </script>
+
+  <!-- team video teaser → dark fade out, then open the About page -->
+  <script>
+    (() => {
+      const v = document.querySelector('[data-video-cta]');
+      if (!v) return;
+      let going = false;
+      function go() {
+        if (going) return; going = true;
+        sessionStorage.setItem('fromVideoExpand', '1');
+        document.documentElement.style.background = '#14100d';
+        document.body.style.transition = 'opacity .38s ease';
+        document.body.style.opacity = '0';
+        setTimeout(() => { location.href = 'aboutus.html'; }, 420);
+      }
+      v.addEventListener('click', go);
+      v.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+    })();
+  </script>
+
+  <script>
+    (() => {
+      const box   = document.querySelector('[data-video]');
+      if (!box) return;
+      const vid   = box.querySelector('video');
+      const play  = box.querySelector('[data-play]');
+      const sound = box.querySelector('[data-sound]');
+
+      const ICON_ON  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+      const ICON_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>';
+      const setIcon = () => { sound.innerHTML = vid.muted ? ICON_OFF : ICON_ON; };
+
+      // grow + show sound whenever the video actually starts playing,
+      // no matter what triggered it (play button OR clicking the video)
+      vid.addEventListener('play', () => {
+        play.classList.add('is-hidden');
+        sound.classList.add('is-shown');
+        setIcon();
+      });
+      vid.addEventListener('pause', () => play.classList.remove('is-hidden'));
+
+      play.addEventListener('click', () => { vid.muted = false; vid.play(); });   // user gesture → sound on
+      vid.addEventListener('click',  () => { vid.paused ? vid.play() : vid.pause(); });
+      sound.addEventListener('click', (e) => { e.stopPropagation(); vid.muted = !vid.muted; setIcon(); });
+
+      setIcon();
+    })();
+  </script>
+
+  <!-- ── 3D Experience fullscreen overlay ── -->
+  <script>
+    (() => {
+      const slider = document.getElementById('heroSlider');
+      if (!slider) return;
+      const slides = [...slider.querySelectorAll('.slide')];
+      let cur = 0;
+      const DELAY = 4200;
+      let t0 = Date.now();
+
+      slides.forEach((s, i) => {
+        s.style.transition = 'opacity .65s ease';
+        s.style.opacity = i === 0 ? '1' : '0';
+        s.style.zIndex  = i === 0 ? '2' : '1';
+      });
+
+      function goTo(n) {
+        slides[cur].style.opacity = '0';
+        slides[cur].style.zIndex = '1';
+        cur = (n + slides.length) % slides.length;
+        slides[cur].style.opacity = '1';
+        slides[cur].style.zIndex = '2';
+      }
+
+      setInterval(() => goTo(cur + 1), DELAY);
+    })();
+  </script>
+
+  <div class="exp-overlay" id="expOverlay">
+    <button class="exp-close" id="expClose" aria-label="Close">&#x2715;</button>
+    <iframe id="expFrame" src="" allow="autoplay" allowfullscreen></iframe>
+  </div>
+
+  <script>
+    (() => {
+      const overlay  = document.getElementById('expOverlay');
+      const frame    = document.getElementById('expFrame');
+      const closeBtn = document.getElementById('expClose');
+      const trigger  = document.getElementById('techPreview');
+      const EXP_SRC  = 'qustomdot experience/index.html';
+
+      function openExp() {
+        frame.src = EXP_SRC;
+        overlay.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeExp() {
+        overlay.classList.remove('is-open');
+        document.body.style.overflow = '';
+        setTimeout(() => { frame.src = ''; }, 500);
+      }
+
+      if (trigger) {
+        trigger.addEventListener('click', openExp);
+        trigger.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openExp(); } });
+      }
+      closeBtn.addEventListener('click', closeExp);
+      document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeExp(); });
+    })();
+  </script>
+</body>
+</html>

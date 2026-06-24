@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QustomDot — Applications (test)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="icon" href="assets/logo.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .apps {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 0.92fr 2.5fr;
+      column-gap: clamp(32px, 4vw, 80px);
+      align-items: start;
+      padding: clamp(110px, 16vh, 180px) var(--pad) clamp(40px, 6vh, 80px);
+    }
+    .apps__head { display: flex; flex-direction: column; height: 100%; }
+    .apps__label { font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--card-orange); margin-bottom: 26px; }
+    .apps__head h2 { font-weight: 900; font-size: clamp(34px, 5.6vw, 72px); line-height: 1.02; letter-spacing: -.5px; }
+    .apps__desc { margin-top: 22px; max-width: 30ch; font-size: clamp(14px, 1.05vw, 16px); line-height: 1.6; color: var(--ink-soft); }
+    .apps__tag { margin-top: auto; display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--ink-soft); }
+    .apps__tag::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--card-orange); flex-shrink: 0; }
+
+    .apps__list { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(16px, 1.6vw, 34px); align-items: stretch; }
+    .apps__item { display: flex; flex-direction: column; }
+    .apps__num {
+      font-size: clamp(40px, 3.8vw, 56px); font-weight: 900;
+      line-height: 1; letter-spacing: -1.5px; margin-bottom: 18px;
+      background: var(--heading-grad);
+      -webkit-background-clip: text; background-clip: text;
+      color: transparent; -webkit-text-fill-color: transparent;
+    }
+    .apps__item h3 { font-weight: 700; font-size: clamp(14px, 1.1vw, 18px); margin-bottom: 9px; }
+    .apps__item p { font-size: clamp(12px, .9vw, 14px); line-height: 1.55; color: var(--ink-soft); }
+
+    /* ── isometric layered glass device ── */
+    .apps__device { margin-top: auto; padding-top: clamp(20px, 3vh, 40px); }
+    .iso-wrap {
+      position: relative; height: 190px;
+      display: flex; align-items: center; justify-content: center;
+      perspective: 950px; perspective-origin: 50% 38%;
+    }
+    .iso-halo {
+      position: absolute; width: 150px; height: 150px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,122,48,.5), transparent 68%);
+      filter: blur(8px); animation: glow 6s ease-in-out infinite;
+    }
+    .iso-shadow {
+      position: absolute; bottom: 20px; width: 110px; height: 16px; border-radius: 50%;
+      background: rgba(150,86,48,.3); filter: blur(8px);
+    }
+    .iso { position: relative; transform-style: preserve-3d; }
+    .iso--tv   { width: 152px; height: 88px;  }
+    .iso--sign { width: 78px;  height: 152px; }
+    .iso--wear { width: 104px; height: 116px; }
+    .iso--auto { width: 184px; height: 66px;  }
+
+    .pane {
+      position: absolute; inset: 0; border-radius: 14px;
+      box-sizing: border-box;
+    }
+    .iso--wear .pane { border-radius: 30px; }
+    .iso--auto .pane { border-radius: 16px; }
+
+    /* glass front & back: transparent with a bright edge */
+    .pane--back, .pane--front {
+      background: linear-gradient(135deg, rgba(255,255,255,.34), rgba(255,255,255,.06));
+      border: 1.5px solid rgba(255,255,255,.6);
+      box-shadow: inset 0 0 16px rgba(255,255,255,.18);
+    }
+    .pane--back  { transform: translateZ(-34px); }
+    .pane--front { transform: translateZ(34px); }
+
+    /* orange screen layer between them */
+    .pane--screen {
+      inset: 6px;
+      transform: translateZ(0);
+      background: linear-gradient(155deg, #ffce8f 0%, #ff7a30 55%, #e8330f 100%);
+      box-shadow: 0 0 30px rgba(255,110,40,.6);
+      border-radius: 11px;
+    }
+    .iso--wear .pane--screen { border-radius: 26px; }
+    .iso--auto .pane--screen { border-radius: 13px; }
+
+    @keyframes isoFloat {
+      0%,100% { transform: rotateX(13deg) rotateY(-34deg) translateY(0); }
+      50%     { transform: rotateX(13deg) rotateY(-28deg) translateY(-8px); }
+    }
+    @keyframes glow { 0%,100% { opacity:.7 } 50% { opacity:1 } }
+    .iso { animation: isoFloat 8s ease-in-out infinite; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .iso { animation: none; transform: rotateX(13deg) rotateY(-31deg); }
+      .iso-halo { animation: none; }
+    }
+    @media (max-width: 960px) { .apps { grid-template-columns: 1fr; row-gap: 48px; } }
+    @media (max-width: 560px) { .apps__list { grid-template-columns: repeat(2,1fr); row-gap: 40px; } }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <a class="brand" href="index.html"><img src="assets/logo.png" alt="QustomDot" /></a>
+    <nav class="nav__links">
+      <a href="#">Products</a>
+      <a href="#">About Us</a>
+      <a class="btn btn--red" href="#">Get started</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="apps">
+      <div class="apps__head">
+        <h2 class="gradient-text">Exceeding current standards.</h2>
+        <p class="apps__desc">A new standard for micro-LED color conversion — across every kind of display.</p>
+        <div class="apps__tag">Wide-gamut. Energy-efficient. Cd-free.</div>
+      </div>
+
+      <div class="apps__right">
+        <div class="apps__list">
+
+          <!-- 01 — TV -->
+          <div class="apps__item">
+            <span class="apps__num">01</span>
+            <h3>MicroLED &amp; QD-OLED TV</h3>
+            <p>Ultra-bright, wide-gamut color for premium television panels.</p>
+            <div class="apps__device"><div class="iso-wrap">
+              <div class="iso-halo"></div><div class="iso-shadow"></div>
+              <div class="iso iso--tv" style="animation-delay:0s">
+                <div class="pane pane--back"></div>
+                <div class="pane pane--screen"></div>
+                <div class="pane pane--front"></div>
+              </div>
+            </div></div>
+          </div>
+
+          <!-- 02 — Signage -->
+          <div class="apps__item">
+            <span class="apps__num">02</span>
+            <h3>Signage</h3>
+            <p>Vivid, durable color conversion for large-format digital displays.</p>
+            <div class="apps__device"><div class="iso-wrap">
+              <div class="iso-halo"></div><div class="iso-shadow"></div>
+              <div class="iso iso--sign" style="animation-delay:-2s">
+                <div class="pane pane--back"></div>
+                <div class="pane pane--screen"></div>
+                <div class="pane pane--front"></div>
+              </div>
+            </div></div>
+          </div>
+
+          <!-- 03 — Wearables -->
+          <div class="apps__item">
+            <span class="apps__num">03</span>
+            <h3>Wearables</h3>
+            <p>Thin-film color for compact, low-power wearable screens.</p>
+            <div class="apps__device"><div class="iso-wrap">
+              <div class="iso-halo"></div><div class="iso-shadow"></div>
+              <div class="iso iso--wear" style="animation-delay:-4s">
+                <div class="pane pane--back"></div>
+                <div class="pane pane--screen"></div>
+                <div class="pane pane--front"></div>
+              </div>
+            </div></div>
+          </div>
+
+          <!-- 04 — Automotive -->
+          <div class="apps__item">
+            <span class="apps__num">04</span>
+            <h3>Automotive</h3>
+            <p>High-reliability color for demanding in-cabin display systems.</p>
+            <div class="apps__device"><div class="iso-wrap">
+              <div class="iso-halo"></div><div class="iso-shadow"></div>
+              <div class="iso iso--auto" style="animation-delay:-1s">
+                <div class="pane pane--back"></div>
+                <div class="pane pane--screen"></div>
+                <div class="pane pane--front"></div>
+              </div>
+            </div></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QustomDot — Quantum Dot Inkjet Inks</title>
+  <meta name="description" content="Color conversion technologies for the next generation of displays. QustomJet™ — Cd-free Quantum Dot inkjet inks." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
+
+  <link rel="icon" href="assets/logo.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- the drifting colour wheel -->
+  <div class="wheel" aria-hidden="true"><div class="wheel__grad"></div></div>
+
+  <!-- header -->
+  <header class="nav">
+    <a class="brand" href="#"><img src="assets/logo.png" alt="QustomDot" /></a>
+    <nav class="nav__links">
+      <a href="#products">Products</a>
+      <a href="#about">About Us</a>
+      <a class="btn btn--red" href="#contact">Get started</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ============ PANEL A — HERO (pinned) ============ -->
+    <section class="hero" id="top">
+      <div class="hero__sticky">
+        <div class="panel__head hero__head">
+          <h1 class="gradient-text">Quantum Dot Inkjet Inks.</h1>
+          <p>Color conversion technologies for the<br />next generation of displays.</p>
+        </div>
+
+        <div class="panel__box">
+          <div class="box box--card forefront">
+            <div class="forefront__text">
+              <h2>At the forefront<br />of the industry</h2>
+              <p>Unlock the power of <strong>Quantum Dot Color Conversion</strong> with QustomJet™ — our line of Cd-free Quantum Dot inkjet inks. QustomJet™ is a high performance, customizable ink that is your optimal solution in creating wide-gamut and energy efficient displays.</p>
+              <a class="btn btn--light" href="#about">About QustomDot</a>
+            </div>
+            <div class="slider" data-slider>
+              <div class="slider__progress" data-progress></div>
+              <div class="slide">
+                <img src="assets/hero-1.jpg" alt="A pipette dispensing red ink above an open jar of orange ink and a red vial." />
+                <div class="slide__caption">
+                  <h3>ROHS Compliant</h3>
+                  <p>Our quantum dots are heavy metal-free, meeting regulatory requirements for environmental sustainability and safety. By eliminating the use of harmful heavy metals, our quantum dots promote a greener approach to nanotechnology.</p>
+                </div>
+              </div>
+              <div class="slide">
+                <img src="assets/hero-2.jpg" alt="Dispensing red ink with a rack of coloured quantum dot vials behind." />
+                <div class="slide__caption">
+                  <h3>Photostable at High Blue Flux</h3>
+                  <p>For on-chip, on-wafer, on-panel LED applications, photostability is essential. QustomDot's quantum dots deliver unrivaled performance, ensuring reliable and robust operation.</p>
+                </div>
+              </div>
+              <div class="slide">
+                <img src="assets/hero-3.jpg" alt="A finished vial of orange quantum dot ink." />
+                <div class="slide__caption">
+                  <h3>Customized Ink</h3>
+                  <p>Unleash the power of quantum dot technology with our co-development services! Our customized QD inks are tailored to your manufacturing process and application, delivering superior performance in displays.</p>
+                </div>
+              </div>
+              <div class="slider__dots" data-dots><span class="is-active"></span><span></span><span></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PANEL B — Exceeding + ROHS grid ============ -->
+    <section class="panel" id="products">
+      <div class="panel__head head--lead">
+        <h2 class="gradient-text reveal">Exceeding current standards.</h2>
+        <p class="reveal">Unlock the power of <strong>Quantum Dot Color Conversion</strong> with QustomJet™ — our line of Cd-free Quantum Dot inkjet inks. QustomJet™ is a high performance, customizable ink that is your optimal solution in creating wide-gamut and energy efficient displays.</p>
+      </div>
+
+      <div class="panel__box">
+        <div class="box box--grid grid">
+          <!-- TL: High Performance — text only, no box -->
+          <div class="feat-text g-tl">
+            <h3>High Performance</h3>
+            <p>Integration of colour conversion: Blue-to-Red >2.5× more efficient than native Red.</p>
+          </div>
+
+          <!-- BL: Cost Reduction — text only -->
+          <div class="feat-text g-bl">
+            <h3>Cost Reduction</h3>
+            <p>Lowering cost of production: We leverage cost gains in BoM, yield and repairs.</p>
+          </div>
+
+          <!-- col 2 top: High Performance icon (replaces +) -->
+          <div class="deco g-c2t" aria-hidden="true">
+            <svg viewBox="0 0 56 44" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="17" x2="18" y2="8"/><polyline points="14.5,11.5 18,8 21.5,11.5"/>
+              <line x1="28" y1="13" x2="28" y2="4"/><polyline points="24.5,7.5 28,4 31.5,7.5"/>
+              <line x1="38" y1="17" x2="38" y2="8"/><polyline points="34.5,11.5 38,8 41.5,11.5"/>
+              <path d="M4 40 A24 24 0 0 1 52 40"/>
+              <line x1="4"  y1="40" x2="7.6" y2="34.8"/>
+              <line x1="28" y1="16" x2="28" y2="20"/>
+              <line x1="52" y1="40" x2="48.4" y2="34.8"/>
+              <line x1="28" y1="40" x2="41" y2="28"/>
+              <circle cx="28" cy="40" r="2.5" fill="rgba(255,255,255,.9)" stroke="none"/>
+            </svg>
+          </div>
+
+          <!-- col 2 bottom: Cost Reduction icon (replaces lines) -->
+          <div class="deco g-c2b" aria-hidden="true">
+            <svg viewBox="0 0 56 48" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="42" cy="10" r="8"/>
+              <text x="42" y="14" text-anchor="middle" font-size="9" fill="rgba(255,255,255,.9)" stroke="none" font-family="Roboto,sans-serif">€</text>
+              <rect x="4"  y="22" width="10" height="22" rx="2"/>
+              <rect x="18" y="28" width="10" height="16" rx="2"/>
+              <rect x="32" y="34" width="10" height="10" rx="2"/>
+              <line x1="44" y1="18" x2="52" y2="42"/>
+              <polyline points="46,42 52,42 52,36"/>
+            </svg>
+          </div>
+
+          <div class="grid__media"><img src="assets/product.jpg" alt="A rack of quantum dot ink vials in a range of colours." /></div>
+
+          <!-- col 4 top: Inkejettable icon (replaces +) -->
+          <div class="deco g-c4t" aria-hidden="true">
+            <svg viewBox="0 0 40 52" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 4 C20 4 4 22 4 34 a16 16 0 0 0 32 0 C36 22 20 4 20 4 Z"/>
+              <path d="M13 36 Q16 28 22 26" stroke-width="1.6" opacity=".7"/>
+            </svg>
+          </div>
+
+          <!-- col 4 bottom: Wide Color Gamut icon (replaces lines) -->
+          <div class="deco g-c4b" aria-hidden="true">
+            <svg viewBox="0 0 56 48" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="4" width="48" height="32" rx="4"/>
+              <line x1="12" y1="12" x2="12" y2="28" stroke-width="3.5" opacity=".5"/>
+              <line x1="19" y1="10" x2="19" y2="30" stroke-width="3.5" opacity=".65"/>
+              <line x1="26" y1="9"  x2="26" y2="31" stroke-width="3.5"/>
+              <line x1="33" y1="10" x2="33" y2="30" stroke-width="3.5" opacity=".65"/>
+              <line x1="40" y1="12" x2="40" y2="28" stroke-width="3.5" opacity=".5"/>
+              <line x1="22" y1="36" x2="18" y2="44"/>
+              <line x1="34" y1="36" x2="38" y2="44"/>
+              <line x1="14" y1="44" x2="42" y2="44"/>
+            </svg>
+          </div>
+
+          <!-- TR: Inkejettable — text only -->
+          <div class="feat-text g-tr">
+            <h3>Inkejettable</h3>
+            <p>Designed for industrial inkjet manufacturing lines: Solvent-free and UV-curable.</p>
+          </div>
+
+          <!-- BR: Wide Color Gamut — text only -->
+          <div class="feat-text g-br">
+            <h3>Wide Color Gamut</h3>
+            <p>Enabling next-generation displays with ultra-wide color coverage beyond DCI-P3 and Rec.2020.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PANEL C — Across + CTA ============ -->
+    <section class="panel" id="about">
+      <div class="panel__head head--right">
+        <div class="head__inner">
+          <h2 class="gradient-text reveal">Across all types of displays</h2>
+          <p class="reveal">Unlock the power of <strong>Quantum Dot Color Conversion</strong> with QustomJet™ — our line of Cd-free Quantum Dot inkjet inks. QustomJet™ is a high performance, customizable ink that is your optimal solution in creating wide-gamut and energy efficient displays.</p>
+        </div>
+      </div>
+
+      <div class="panel__box" id="contact">
+        <div class="box box--card cta">
+          <h2>Ready to build the next<br />generation of displays?</h2>
+          <p>Get in touch to learn how QustomJet™ inks can power your wide-gamut, energy-efficient displays.</p>
+          <a class="btn btn--light" href="#">Get started</a>
+          <div class="cta__bar">
+            <span>© 2026 QustomDot. All rights reserved.</span>
+            <nav><a href="#products">Products</a><a href="#about">About Us</a><a href="#contact">Contact</a></nav>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
