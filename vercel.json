@@ -1,4 +1,6 @@
 {
+  "outputDirectory": ".",
+  "buildCommand": "",
   "rewrites": [
     { "source": "/", "destination": "/test6.html" }
   ]
